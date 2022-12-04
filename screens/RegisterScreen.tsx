@@ -16,21 +16,19 @@ import {
   WarningOutlineIcon,
   Heading,
   HStack,
-  Link,
 } from "native-base";
 import { MaterialIcons } from "@expo/vector-icons";
 import { toFormikValidationSchema } from "zod-formik-adapter";
 
 const createUser = async (queryKey: User) => {
   const { data: response } = await axios.post(
-    "http://192.168.0.73:4000/users",
+    "http://192.168.0.73:4000/users/register",
     queryKey
   );
   return response.data;
 };
 
 export type User = {
-  id?: number;
   firstName: string;
   lastName: string;
   email: string;
@@ -38,7 +36,7 @@ export type User = {
   passwordConfirm: string;
 };
 
-export const RegisterScreen = () => {
+export const RegisterScreen = ({ navigation }: any) => {
   const [show, setShow] = useState<Boolean>(false);
   const queryClient = useQueryClient();
   const registerSchema = object({
@@ -62,6 +60,7 @@ export const RegisterScreen = () => {
     onSuccess: (data) => {
       const message = "success";
       alert(message);
+      navigation.navigate("Login");
     },
     onError: () => {
       alert("there was an error");
@@ -229,7 +228,6 @@ export const RegisterScreen = () => {
             onPress={() => handleSubmit()}
             isLoadingText="Submitting"
             colorScheme="indigo"
-            disabled={isLoading}
           >
             Register
           </Button>
@@ -244,16 +242,18 @@ export const RegisterScreen = () => {
             >
               Already have an account?{" "}
             </Text>
-            <Link
+            <Button
+              variant="ghost"
+              mt="-10px"
               _text={{
                 color: "indigo.500",
                 fontWeight: "medium",
                 fontSize: "sm",
               }}
-              href="#"
+              onPress={() => navigation.navigate("Login")}
             >
               Sign in
-            </Link>
+            </Button>
           </HStack>
         </View>
       )}

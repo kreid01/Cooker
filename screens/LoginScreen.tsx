@@ -17,6 +17,8 @@ import axios from "axios";
 import { Formik } from "formik";
 import { useMutation, useQueryClient } from "react-query";
 import { MaterialIcons } from "@expo/vector-icons";
+import { setAccessToken } from "../utills/accessToken";
+import { useDispatch } from "react-redux";
 
 export type Login = {
   email: string;
@@ -24,21 +26,22 @@ export type Login = {
 };
 
 const loginUser = async (user: Login) => {
-  const { data: response } = await axios.post(
+  const { data } = await axios.post(
     "http://192.168.0.73:4000/users/login",
     user
   );
-  return response;
+
+  return data;
 };
 
-export const LoginScreen = ({}) => {
+export const LoginScreen = ({ navigation }: any) => {
   const [show, setShow] = React.useState<Boolean>(false);
   const queryClient = useQueryClient();
-
+  const dispatch = useDispatch();
   const { mutate, isLoading } = useMutation(loginUser, {
     onSuccess: (data) => {
-      const message = "success";
-      alert(message);
+      setAccessToken(data);
+      navigation.navigate("Home");
     },
     onError: () => {
       alert("Invalid login");
@@ -140,16 +143,18 @@ export const LoginScreen = ({}) => {
                 >
                   I'm a new user.{" "}
                 </Text>
-                <Link
+                <Button
+                  variant="ghost"
+                  mt="-10px"
                   _text={{
                     color: "indigo.500",
                     fontWeight: "medium",
                     fontSize: "sm",
                   }}
-                  href="#"
+                  onPress={() => navigation.navigate("Registration")}
                 >
-                  Sign Up
-                </Link>
+                  Sign up
+                </Button>
               </HStack>
             </VStack>
           </Box>

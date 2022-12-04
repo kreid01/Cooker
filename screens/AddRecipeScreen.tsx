@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import axios from "axios";
 import { Formik } from "formik";
-import { Input, Button, Radio, View, Text } from "native-base";
+import { Input, Button, Radio, View, Text, ScrollView } from "native-base";
 
 import { Recipe } from "../consts/interfaces";
 import { Sliders } from "../components/Sliders";
@@ -112,114 +112,126 @@ export const AddRecipeScreen = () => {
       }
     >
       {({ handleChange, handleBlur, handleSubmit, values }) => (
-        <View className="mx-10 mt-5 ">
-          <Input
-            my={2}
-            placeholder="Recipe Title"
-            className="h-10"
-            onChangeText={handleChange("title")}
-            onBlur={handleBlur("title")}
-            value-={values.title}
-          />
-          <Input
-            my={2}
-            placeholder="Ingredients"
-            onBlur={handleBlur("ingredients")}
-            value={multiValues.singleIngredient}
-            onChangeText={(text) =>
-              setMultiValues((prevState) => ({
-                ...prevState,
-                singleIngredient: text,
-              }))
-            }
-            InputRightElement={
-              <Button onPress={() => addIngredient()}>Add</Button>
-            }
-          />
-          <View>
-            {multiValues?.ingredients.map((ingredient, i) => {
-              return (
-                <View className="flex flex-row justify-between">
-                  <Text
-                    key={i}
-                    className="text-black font-semibold text-md mx-2 my-2 border-b-[1px] border-gray-200"
-                  >
-                    - {ingredient}
-                  </Text>
-                  <Button
-                    variant="ghost"
-                    className="-mt-1"
-                    onPress={() => removeIngredient(i)}
-                  >
-                    Remove
-                  </Button>
-                </View>
-              );
-            })}
+        <ScrollView
+          keyboardShouldPersistTaps="always"
+          automaticallyAdjustKeyboardInsets={true}
+        >
+          <View className="mx-10 mt-5  overflow-y-scroll">
+            <Input
+              my={2}
+              placeholder="Recipe Title"
+              className="h-10"
+              onChangeText={handleChange("title")}
+              onBlur={handleBlur("title")}
+              value-={values.title}
+            />
+            <Input
+              my={2}
+              placeholder="Ingredients"
+              onBlur={handleBlur("ingredients")}
+              value={multiValues.singleIngredient}
+              onChangeText={(text) =>
+                setMultiValues((prevState) => ({
+                  ...prevState,
+                  singleIngredient: text,
+                }))
+              }
+              InputRightElement={
+                <Button onPress={() => addIngredient()}>Add</Button>
+              }
+            />
+            <View>
+              {multiValues?.ingredients.map((ingredient, i) => {
+                return (
+                  <View className="flex flex-row justify-between">
+                    <Text
+                      key={i}
+                      className="text-black font-semibold text-md mx-2 my-2 border-b-[1px] border-gray-200"
+                    >
+                      - {ingredient}
+                    </Text>
+                    <Button
+                      variant="ghost"
+                      className="-mt-1"
+                      onPress={() => removeIngredient(i)}
+                    >
+                      Remove
+                    </Button>
+                  </View>
+                );
+              })}
+            </View>
+            <Input
+              placeholder="Steps"
+              onBlur={handleBlur("steps")}
+              value={multiValues.singleStep}
+              my={2}
+              onChangeText={(text) =>
+                setMultiValues((prevState) => ({
+                  ...prevState,
+                  singleStep: text,
+                }))
+              }
+              InputRightElement={<Button onPress={() => addStep()}>Add</Button>}
+            />
+            <View>
+              {multiValues?.steps.map((step, i) => {
+                return (
+                  <View className="flex flex-row justify-between">
+                    <Text
+                      key={i}
+                      className="text-black font-semibold text-md mx-2 my-2  max-w-[70%]"
+                    >
+                      {i + 1}. {step}
+                    </Text>
+                    <Button
+                      variant="ghost"
+                      className="-mt-1"
+                      onPress={() => removeStep(i)}
+                    >
+                      Remove
+                    </Button>
+                  </View>
+                );
+              })}
+            </View>
+            <Sliders
+              sliderValues={sliderValues}
+              setSliderValues={setSliderValues}
+            />
+            <Input
+              placeholder="Image URL"
+              className="h-10 w-[100vw]"
+              my={2}
+              onChangeText={handleChange("imageUrl")}
+              onBlur={handleBlur("imageUrl")}
+              value-={values.imageUrl}
+            />
+            <Radio.Group
+              className=" text-sm"
+              name="isVegetarian"
+              my={2}
+              accessibilityLabel="Is Vegetarian"
+              value={values.isVegetarian}
+              onChange={handleChange("isVegetarian")}
+            >
+              <Radio value={"true"} my={1}>
+                Is Vegetarian
+              </Radio>
+              <Radio value={"false"} my={1}>
+                Is Not Vegetarian
+              </Radio>
+            </Radio.Group>
+
+            <Button
+              spinnerPlacement="end"
+              isLoadingText="Submitting"
+              onPress={() => handleSubmit()}
+            >
+              Create
+            </Button>
           </View>
-          <Input
-            placeholder="Steps"
-            onBlur={handleBlur("steps")}
-            value={multiValues.singleStep}
-            my={2}
-            onChangeText={(text) =>
-              setMultiValues((prevState) => ({
-                ...prevState,
-                singleStep: text,
-              }))
-            }
-            InputRightElement={<Button onPress={() => addStep()}>Add</Button>}
-          />
-          <View>
-            {multiValues?.steps.map((step, i) => {
-              return (
-                <View className="flex flex-row justify-between">
-                  <Text
-                    key={i}
-                    className="text-black font-semibold text-md mx-2 my-2  max-w-[70%]"
-                  >
-                    {i + 1}. {step}
-                  </Text>
-                  <Button
-                    variant="ghost"
-                    className="-mt-1"
-                    onPress={() => removeStep(i)}
-                  >
-                    Remove
-                  </Button>
-                </View>
-              );
-            })}
-          </View>
-          <Sliders
-            sliderValues={sliderValues}
-            setSliderValues={setSliderValues}
-          />
-          <Input
-            placeholder="Image URL"
-            className="h-10 w-[100vw]"
-            my={2}
-            onChangeText={handleChange("imageUrl")}
-            onBlur={handleBlur("imageUrl")}
-            value-={values.imageUrl}
-          />
-          <Radio.Group
-            className=" text-sm"
-            name="isVegetarian"
-            my={2}
-            accessibilityLabel="Is Vegetarian"
-            value={values.isVegetarian}
-            onChange={handleChange("isVegetarian")}
-          >
-            <Radio value={"true"} my={1}>
-              Is Vegetarian
-            </Radio>
-            <Radio value={"false"} my={1}>
-              Is Not Vegetarian
-            </Radio>
-          </Radio.Group>
-          <Button onPress={() => handleSubmit()}>Create</Button>
-        </View>
+        </ScrollView>
       )}
     </Formik>
   );
