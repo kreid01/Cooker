@@ -1,5 +1,5 @@
 Arguments: 
-  C:\Program Files\nodejs\node.exe C:\Users\kiera\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js add @redux/toolkit
+  C:\Program Files\nodejs\node.exe C:\Users\kiera\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js add @types/expo-fast-image
 
 PATH: 
   C:\windows\system32;C:\windows;C:\windows\System32\Wbem;C:\windows\System32\WindowsPowerShell\v1.0\;C:\windows\System32\OpenSSH\;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files\NVIDIA Corporation\NVIDIA NvDLISR;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\dotnet\;C:\Users\kiera\AppData\Roaming\nvm;C:\Program Files\nodejs;C:\Program Files\nodejs\;C:\Program Files\Microsoft SQL Server\150\Tools\Binn\;C:\Program Files\Microsoft SQL Server\Client SDK\ODBC\170\Tools\Binn\;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\Git\cmd;C:\Program Files\Docker\Docker\resources\bin;C:\Program Files (x86)\Microsoft SQL Server\150\Tools\Binn\;C:\Program Files\Microsoft SQL Server\150\DTS\Binn\;C:\Program Files (x86)\Microsoft SQL Server\150\DTS\Binn\;C:\Program Files\Azure Data Studio\bin;C:\Program Files\Amazon\AWSCLIV2\;C:\Program Files\MySQL\MySQL Shell 8.0\bin\;C:\Users\kiera\AppData\Local\Microsoft\WindowsApps;C:\Users\kiera\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\kiera\AppData\Local\GitHubDesktop\bin;C:\Users\kiera\AppData\Roaming\nvm;C:\Program Files\nodejs;C:\Users\kiera\AppData\Roaming\npm;C:\Users\kiera\.dotnet\tools;C:\Users\kiera\AppData\Local\Programs\Python\Python310;c:\users\kiera\appdata\local\programs\python\python310\lib\site-packages;;C:\Program Files\Azure Data Studio\bin;C:\Program Files\heroku\bin
@@ -14,7 +14,7 @@ Platform:
   win32 x64
 
 Trace: 
-  Error: https://registry.yarnpkg.com/@redux%2ftoolkit: Not found
+  Error: https://registry.yarnpkg.com/@types%2fexpo-fast-image: Not found
       at Request.params.callback [as _callback] (C:\Users\kiera\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:66145:18)
       at Request.self.callback (C:\Users\kiera\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:140890:22)
       at Request.emit (node:events:513:28)
@@ -43,9 +43,13 @@ npm manifest:
       "@hookform/resolvers": "^2.9.10",
       "@react-navigation/native": "^6.0.16",
       "@react-navigation/native-stack": "^6.9.4",
+      "@reduxjs/toolkit": "^1.9.1",
       "AsyncStorage": "^0.1.5",
       "axios": "^1.2.0",
       "expo": "~47.0.8",
+      "expo-dev-client": "~2.0.1",
+      "expo-fast-image": "^1.1.3",
+      "expo-file-system": "~15.1.1",
       "expo-secure-store": "^12.0.0",
       "expo-status-bar": "~1.4.2",
       "formik": "^2.2.9",
@@ -56,11 +60,14 @@ npm manifest:
       "react": "^18.2.0",
       "react-dom": "^18.2.0",
       "react-native": "0.70.5",
+      "react-native-fast-image": "^8.6.3",
       "react-native-safe-area-context": "^4.4.1",
       "react-native-screens": "^3.18.2",
       "react-native-svg": "13.4.0",
       "react-native-web": "~0.18.9",
       "react-query": "^3.39.2",
+      "react-redux": "^8.0.5",
+      "redux": "^4.2.0",
       "zod": "^3.19.1",
       "zod-formik-adapter": "^1.1.1"
     },
@@ -1140,7 +1147,7 @@ Lockfile:
       pirates "^4.0.5"
       source-map-support "^0.5.16"
   
-  "@babel/runtime@^7.0.0", "@babel/runtime@^7.12.5", "@babel/runtime@^7.14.0", "@babel/runtime@^7.18.6", "@babel/runtime@^7.5.5", "@babel/runtime@^7.6.2", "@babel/runtime@^7.7.2", "@babel/runtime@^7.8.4", "@babel/runtime@^7.8.7":
+  "@babel/runtime@^7.0.0", "@babel/runtime@^7.12.1", "@babel/runtime@^7.12.5", "@babel/runtime@^7.14.0", "@babel/runtime@^7.18.6", "@babel/runtime@^7.5.5", "@babel/runtime@^7.6.2", "@babel/runtime@^7.7.2", "@babel/runtime@^7.8.4", "@babel/runtime@^7.8.7", "@babel/runtime@^7.9.2":
     version "7.20.6"
     resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.20.6.tgz#facf4879bfed9b5326326273a64220f099b0fce3"
     integrity sha512-Q+8MqP7TiHMWzSfwiJwXCjyf4GYA4Dgw3emg/7xmwsdLJOZUp+nMqcOwOzzYheuM1rhDu8FSj2l0aoMygEuXuA==
@@ -2790,6 +2797,16 @@ Lockfile:
     dependencies:
       "@react-types/shared" "^3.16.0"
   
+  "@reduxjs/toolkit@^1.9.1":
+    version "1.9.1"
+    resolved "https://registry.yarnpkg.com/@reduxjs/toolkit/-/toolkit-1.9.1.tgz#4c34dc4ddcec161535288c60da5c19c3ef15180e"
+    integrity sha512-HikrdY+IDgRfRYlCTGUQaiCxxDDgM1mQrRbZ6S1HFZX5ZYuJ4o8EstNmhTwHdPl2rTmLxzwSu0b3AyeyTlR+RA==
+    dependencies:
+      immer "^9.0.16"
+      redux "^4.2.0"
+      redux-thunk "^2.4.2"
+      reselect "^4.1.7"
+  
   "@segment/loosely-validate-event@^2.0.0":
     version "2.0.0"
     resolved "https://registry.yarnpkg.com/@segment/loosely-validate-event/-/loosely-validate-event-2.0.0.tgz#87dfc979e5b4e7b82c5f1d8b722dfd5d77644681"
@@ -2827,6 +2844,14 @@ Lockfile:
     dependencies:
       "@types/minimatch" "*"
       "@types/node" "*"
+  
+  "@types/hoist-non-react-statics@^3.3.1":
+    version "3.3.1"
+    resolved "https://registry.yarnpkg.com/@types/hoist-non-react-statics/-/hoist-non-react-statics-3.3.1.tgz#1124aafe5118cb591977aeb1ceaaed1070eb039f"
+    integrity sha512-iMIqiko6ooLrTh1joXodJK5X9xeEALT1kM5G3ZLhD3hszxBdIEd5C75U834D9mLcINgD4OyZf5uQXjkuYydWvA==
+    dependencies:
+      "@types/react" "*"
+      hoist-non-react-statics "^3.3.0"
   
   "@types/html-minifier-terser@^5.0.0":
     version "5.1.2"
@@ -2914,6 +2939,11 @@ Lockfile:
     integrity sha512-GkewRA4i5oXacU/n4MA9+bLgt5/L3F1mKrYvFGm7r2ouLXhRKjuWwo9XHNnbx6WF3vlGW21S3fCvgqxvxXXc5g==
     dependencies:
       source-map "^0.6.1"
+  
+  "@types/use-sync-external-store@^0.0.3":
+    version "0.0.3"
+    resolved "https://registry.yarnpkg.com/@types/use-sync-external-store/-/use-sync-external-store-0.0.3.tgz#b6725d5f4af24ace33b36fafd295136e75509f43"
+    integrity sha512-EwmlvuaxPNej9+T4v5AuBPJa2x2UOJVdjCtDHgcDqitUeOtjnJKJ+apYjVcAoBEMjKW1VVFGZLUb5+qqa09XFA==
   
   "@types/webpack-sources@*":
     version "3.2.0"
@@ -5577,10 +5607,48 @@ Lockfile:
       "@expo/config" "~7.0.2"
       uuid "^3.3.2"
   
+  expo-dev-client@~2.0.1:
+    version "2.0.1"
+    resolved "https://registry.yarnpkg.com/expo-dev-client/-/expo-dev-client-2.0.1.tgz#f5878807c96a60d90fc219b6535654cb6ddb9214"
+    integrity sha512-+OXXZKKo/CplqklpaZasHAX7qaRrzC83biqXTFa1z5NiFW41uqtAqTFx6gmPi4kx3YgwtD+ep6R3SRrKjdCukg==
+    dependencies:
+      expo-dev-launcher "2.0.2"
+      expo-dev-menu "2.0.2"
+      expo-dev-menu-interface "1.0.0"
+      expo-manifests "~0.4.0"
+      expo-updates-interface "~0.8.0"
+  
+  expo-dev-launcher@2.0.2:
+    version "2.0.2"
+    resolved "https://registry.yarnpkg.com/expo-dev-launcher/-/expo-dev-launcher-2.0.2.tgz#bbcde0dd35e81ed6a415dc5b246da68e9b365255"
+    integrity sha512-MQT7VSOHJQrEs3YAv5BQLYs3Uk7P1dNqBw6kKrj3jKBq0z92k2LLg1aCk7nP8OGJVDvrb2jTXBka8VXVqF0ECg==
+    dependencies:
+      expo-dev-menu "2.0.2"
+      resolve-from "^5.0.0"
+      semver "^7.3.5"
+  
+  expo-dev-menu-interface@1.0.0:
+    version "1.0.0"
+    resolved "https://registry.yarnpkg.com/expo-dev-menu-interface/-/expo-dev-menu-interface-1.0.0.tgz#00204cb7e1c43cc8a4eee9cb74f6e5760b512d75"
+    integrity sha512-4lsVofTwV9oBM+zo7XhtmvbfiXD4I7I3Rqns6U0i6IOnH7OGBDpKvGZ5YikWPFGn6NOu8loqqd8S7inFIaxC0A==
+  
+  expo-dev-menu@2.0.2:
+    version "2.0.2"
+    resolved "https://registry.yarnpkg.com/expo-dev-menu/-/expo-dev-menu-2.0.2.tgz#9a2d7a00097d4eafe54cf8e9a5c727174e101e4c"
+    integrity sha512-SxR5riXgm+VVKsDKC/bOLuOJ0CKutW07G+OqJ9eYfxwGfxa8omLJHwagbCsd8FwUPGkzvzgfRJRGLo5J6REMow==
+    dependencies:
+      expo-dev-menu-interface "1.0.0"
+      semver "^7.3.5"
+  
   expo-error-recovery@~4.0.1:
     version "4.0.1"
     resolved "https://registry.yarnpkg.com/expo-error-recovery/-/expo-error-recovery-4.0.1.tgz#3e3333e134c992c234539d3773fe78915c883755"
     integrity sha512-wceptnRX+N3qCSVTNbIchUFu3GmY30onRH5L66OF8HMLpAIQfrZMLxJfz7SAMJTcr3jxsJ11vSa2l2RaPKgHsQ==
+  
+  expo-fast-image@^1.1.3:
+    version "1.1.3"
+    resolved "https://registry.yarnpkg.com/expo-fast-image/-/expo-fast-image-1.1.3.tgz#c00a83f365c9c03b585d8198e2da0b6ecb22fc17"
+    integrity sha512-dpHvUFJxImD+yDVJk3ubCMGSYgbewPfbsPMOpD/EP7PKDA4RurtkJZcUDF8T/0gxuxZMCldPgHup6np/hrK/MQ==
   
   expo-file-system@~15.1.0, expo-file-system@~15.1.1:
     version "15.1.1"
@@ -5596,10 +5664,22 @@ Lockfile:
     dependencies:
       fontfaceobserver "^2.1.0"
   
+  expo-json-utils@~0.4.0:
+    version "0.4.0"
+    resolved "https://registry.yarnpkg.com/expo-json-utils/-/expo-json-utils-0.4.0.tgz#47ae83a1cc973101d62371f94790e9ad39491751"
+    integrity sha512-lK6gjea72XTYafpKNNJaMrBK5dYAX8LFLXrp/M1MKJU4Zy7EHd2rKrLwop3GZts8VdwLHeVcMko79SAbhe3i5Q==
+  
   expo-keep-awake@~11.0.1:
     version "11.0.1"
     resolved "https://registry.yarnpkg.com/expo-keep-awake/-/expo-keep-awake-11.0.1.tgz#ee354465892a94040ffe09901b85b469e7d54fb3"
     integrity sha512-44ZjgLE4lnce2d40Pv8xsjMVc6R5GvgHOwZfkLYtGmgYG9TYrEJeEj5UfSeweXPL3pBFhXKfFU8xpGYMaHdP0A==
+  
+  expo-manifests@~0.4.0:
+    version "0.4.0"
+    resolved "https://registry.yarnpkg.com/expo-manifests/-/expo-manifests-0.4.0.tgz#6fd44b6427e113f2eb9409ca46df95cbbea068df"
+    integrity sha512-IdZjIYDxx4nH0Gb3X4T4/2YknmR/jSLxymAS0m7SfJ9V7Vlu/y0p3lNwUys9/JzihxX9PDIuOi/Y4/uqL6TlXg==
+    dependencies:
+      expo-json-utils "~0.4.0"
   
   expo-modules-autolinking@1.0.0:
     version "1.0.0"
@@ -5639,6 +5719,11 @@ Lockfile:
     version "1.4.2"
     resolved "https://registry.yarnpkg.com/expo-status-bar/-/expo-status-bar-1.4.2.tgz#14f2b9a6dc7d550578421f07e0046f5fafc2b403"
     integrity sha512-ZWjO6D4ARGYfAd3SWDD3STNudHDhyBZDZjhhseqoEmsf7bS9ykny8KKOhlzJW24qIQNPhkgdvHhaw9fQwMJy3Q==
+  
+  expo-updates-interface@~0.8.0:
+    version "0.8.1"
+    resolved "https://registry.yarnpkg.com/expo-updates-interface/-/expo-updates-interface-0.8.1.tgz#baeeeb01a77439682432be83ba78bc2e00547c4e"
+    integrity sha512-1TPFCTQFHMZbltFGnxig3PbN/b6nO4T0RyL8XqdmYvQY0ElOCprZXQQ8vNDqeLYHgausG1lD4OyJwFzh2SNBSA==
   
   expo@~47.0.8:
     version "47.0.8"
@@ -6480,7 +6565,7 @@ Lockfile:
       minimalistic-assert "^1.0.0"
       minimalistic-crypto-utils "^1.0.1"
   
-  hoist-non-react-statics@^3.3.0:
+  hoist-non-react-statics@^3.3.0, hoist-non-react-statics@^3.3.2:
     version "3.3.2"
     resolved "https://registry.yarnpkg.com/hoist-non-react-statics/-/hoist-non-react-statics-3.3.2.tgz#ece0acaf71d62c2969c2ec59feff42a4b1a85b45"
     integrity sha512-/gGivxi8JPKWNm/W0jSmzcMPpfpPLc3dY/6GxhX2hQ9iGj3aDfklV4ET7NjKpSinLpJ5vafa9iiGIEZg10SfBw==
@@ -6702,6 +6787,11 @@ Lockfile:
     version "8.0.1"
     resolved "https://registry.yarnpkg.com/immer/-/immer-8.0.1.tgz#9c73db683e2b3975c424fb0572af5889877ae656"
     integrity sha512-aqXhGP7//Gui2+UrEtvxZxSquQVXTpZ7KDxfCcKAF3Vysvw0CViVaW9RZ1j1xlIYqaaaipBoqdqeibkc18PNvA==
+  
+  immer@^9.0.16:
+    version "9.0.16"
+    resolved "https://registry.yarnpkg.com/immer/-/immer-9.0.16.tgz#8e7caab80118c2b54b37ad43e05758cdefad0198"
+    integrity sha512-qenGE7CstVm1NrHQbMh8YaSzTZTFNP3zPqr3YU0S0UY441j4bJTg4A2Hh5KAhwgaiU6ZZ1Ar6y/2f4TblnMReQ==
   
   import-fresh@^2.0.0:
     version "2.0.0"
@@ -9886,7 +9976,7 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/react-freeze/-/react-freeze-1.0.3.tgz#5e3ca90e682fed1d73a7cb50c2c7402b3e85618d"
     integrity sha512-ZnXwLQnGzrDpHBHiC56TXFXvmolPeMjTn1UOm610M4EXGzbEDR7oOIyS2ZiItgbs6eZc4oU/a0hpk8PrcKvv5g==
   
-  "react-is@^16.12.0 || ^17.0.0 || ^18.0.0", react-is@^18.1.0:
+  "react-is@^16.12.0 || ^17.0.0 || ^18.0.0", react-is@^18.0.0, react-is@^18.1.0:
     version "18.2.0"
     resolved "https://registry.yarnpkg.com/react-is/-/react-is-18.2.0.tgz#199431eeaaa2e09f86427efbb4f1473edb47609b"
     integrity sha512-xWGDIW6x921xtzPkhiULtthJHoJvBbF3q26fzloPCK0hsvxtPVelvftw3zjbHWSkR2km9Z+4uxbDDK/6Zw9B8w==
@@ -9910,6 +10000,11 @@ Lockfile:
       flow-parser "^0.121.0"
       jscodeshift "^0.13.1"
       nullthrows "^1.1.1"
+  
+  react-native-fast-image@^8.6.3:
+    version "8.6.3"
+    resolved "https://registry.yarnpkg.com/react-native-fast-image/-/react-native-fast-image-8.6.3.tgz#6edc3f9190092a909d636d93eecbcc54a8822255"
+    integrity sha512-Sdw4ESidXCXOmQ9EcYguNY2swyoWmx53kym2zRsvi+VeFCHEdkO+WG1DK+6W81juot40bbfLNhkc63QnWtesNg==
   
   react-native-gradle-plugin@^0.70.3:
     version "0.70.3"
@@ -9997,6 +10092,18 @@ Lockfile:
       broadcast-channel "^3.4.1"
       match-sorter "^6.0.2"
   
+  react-redux@^8.0.5:
+    version "8.0.5"
+    resolved "https://registry.yarnpkg.com/react-redux/-/react-redux-8.0.5.tgz#e5fb8331993a019b8aaf2e167a93d10af469c7bd"
+    integrity sha512-Q2f6fCKxPFpkXt1qNRZdEDLlScsDWyrgSj0mliK59qU6W5gvBiKkdMEG2lJzhd1rCctf0hb6EtePPLZ2e0m1uw==
+    dependencies:
+      "@babel/runtime" "^7.12.1"
+      "@types/hoist-non-react-statics" "^3.3.1"
+      "@types/use-sync-external-store" "^0.0.3"
+      hoist-non-react-statics "^3.3.2"
+      react-is "^18.0.0"
+      use-sync-external-store "^1.0.0"
+  
   react-refresh@^0.4.0:
     version "0.4.3"
     resolved "https://registry.yarnpkg.com/react-refresh/-/react-refresh-0.4.3.tgz#966f1750c191672e76e16c2efa569150cc73ab53"
@@ -10083,6 +10190,18 @@ Lockfile:
     integrity sha512-nRCcW9Sj7NuZwa2XvH9co8NPeXUBhZP7CRKJtU+cS6PW9FpCIFoI5ib0NT1ZrbNuPoRy0ylyCaUL8Gih4LSyFg==
     dependencies:
       minimatch "3.0.4"
+  
+  redux-thunk@^2.4.2:
+    version "2.4.2"
+    resolved "https://registry.yarnpkg.com/redux-thunk/-/redux-thunk-2.4.2.tgz#b9d05d11994b99f7a91ea223e8b04cf0afa5ef3b"
+    integrity sha512-+P3TjtnP0k/FEjcBL5FZpoovtvrTNT/UXd4/sluaSyrURlSlhLSzEdfsTBW7WsKB6yPvgd7q/iZPICFjW4o57Q==
+  
+  redux@^4.2.0:
+    version "4.2.0"
+    resolved "https://registry.yarnpkg.com/redux/-/redux-4.2.0.tgz#46f10d6e29b6666df758780437651eeb2b969f13"
+    integrity sha512-oSBmcKKIuIR4ME29/AeNUnl5L+hvBq7OaJWzaptTQJAntaPvxIJqfnjbaEiCzzaIz+XmVILfqAM3Ob0aXLPfjA==
+    dependencies:
+      "@babel/runtime" "^7.9.2"
   
   regenerate-unicode-properties@^10.1.0:
     version "10.1.0"
@@ -10234,7 +10353,7 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/requires-port/-/requires-port-1.0.0.tgz#925d2601d39ac485e091cf0da5c6e694dc3dcaff"
     integrity sha512-KigOCHcocU3XODJxsu8i/j8T9tzT4adHiecwORRQ0ZZFcp7ahwXuRU1m+yuO90C5ZUyGeGfocHDI14M3L3yDAQ==
   
-  reselect@^4.0.0:
+  reselect@^4.0.0, reselect@^4.1.7:
     version "4.1.7"
     resolved "https://registry.yarnpkg.com/reselect/-/reselect-4.1.7.tgz#56480d9ff3d3188970ee2b76527bd94a95567a42"
     integrity sha512-Zu1xbUt3/OPwsXL46hvOOoQrap2azE7ZQbokq61BQfiXvhewsKDwhMeZjTX9sX0nvw1t/U5Audyn1I9P/m9z0A==

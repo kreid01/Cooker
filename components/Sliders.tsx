@@ -1,5 +1,6 @@
 import { Slider, View, Text } from "native-base";
 import React from "react";
+import { MySlider } from "./MySlider";
 
 interface Props {
   sliderValues: {
@@ -29,61 +30,40 @@ export const Sliders: React.FC<Props> = ({ sliderValues, setSliderValues }) => {
   return (
     <View>
       <Text>Calories: {sliderValues.calories} per serving</Text>
-      <Slider
-        defaultValue={400}
-        minValue={100}
+      <MySlider
+        handleChange={handleChange}
         maxValue={1000}
-        size="sm"
-        my={2}
-        onChange={(e: any) => handleChange(e, "calories")}
-      >
-        <Slider.Track>
-          <Slider.FilledTrack />
-        </Slider.Track>
-        <Slider.Thumb />
-      </Slider>
+        minValue={100}
+        defaultValue={300}
+        type="calories"
+      />
       <Text> {sliderValues.servings} servings</Text>
-      <Slider
+      <MySlider
+        handleChange={handleChange}
+        maxValue={1}
+        minValue={20}
         defaultValue={4}
-        size="sm"
-        minValue={1}
-        maxValue={15}
-        my={2}
-        onChange={(e: any) => handleChange(e, "servings")}
-      >
-        <Slider.Track>
-          <Slider.FilledTrack />
-        </Slider.Track>
-        <Slider.Thumb />
-      </Slider>
+        type="servings"
+      />
+
       <Text>Preparation Time: {sliderValues.prepTime} mins</Text>
-      <Slider
+      <MySlider
+        handleChange={handleChange}
+        maxValue={120}
+        minValue={1}
         defaultValue={20}
-        size="sm"
-        minValue={1}
-        maxValue={120}
-        my={2}
-        onChange={(e: any) => handleChange(e, "prepTime")}
-      >
-        <Slider.Track>
-          <Slider.FilledTrack />
-        </Slider.Track>
-        <Slider.Thumb />
-      </Slider>
+        type="prepTime"
+      />
+
       <Text>Cooking Time: {sliderValues.cookingTime} mins</Text>
-      <Slider
-        defaultValue={40}
-        size="sm"
-        minValue={1}
+
+      <MySlider
+        handleChange={handleChange}
         maxValue={120}
-        my={2}
-        onChange={(e: any) => handleChange(e, "cookingTime")}
-      >
-        <Slider.Track>
-          <Slider.FilledTrack />
-        </Slider.Track>
-        <Slider.Thumb />
-      </Slider>
+        minValue={1}
+        defaultValue={20}
+        type="cookingTime"
+      />
     </View>
   );
 };
