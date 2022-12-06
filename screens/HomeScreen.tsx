@@ -3,14 +3,11 @@ import { useQuery } from "react-query";
 import axios from "axios";
 import { FlatList, Image, StatusBar, Text, View } from "native-base";
 import { RefreshControl } from "react-native";
-import { Nav } from "../components/Nav";
 import { TouchableOpacity } from "react-native";
-import { useRefreshOnFocus } from "../hooks/useRefreshonFocus";
 import { getAccessToken } from "../utills/accessToken";
 import { useDispatch } from "react-redux";
 import { setUser } from "../slices/userSlice";
 import { Recipe } from "../consts/interfaces";
-import { useIsFocused } from "@react-navigation/native";
 
 const getRecipe = async () => {
   const { data } = await axios.get("http://192.168.0.73:4000/recipes?search=");
@@ -38,7 +35,6 @@ export const HomeScreen = ({ navigation }: any) => {
 
   return (
     <View className="relative z-10">
-      <Nav navigation={navigation} />
       <FlatList
         numColumns={2}
         renderItem={({ item, index }: { item: Recipe; index: number }) => (
