@@ -21,14 +21,14 @@ export const MySlider: React.FC<Props> = ({
       defaultValue={defaultValue}
       minValue={minValue}
       maxValue={maxValue}
-      size="sm"
+      size="lg"
       my={2}
       onChange={(e: any) => handleChange(e, type)}
     >
       <Slider.Track>
-        <Slider.FilledTrack />
+        <Slider.FilledTrack bg="#9D14FF" />
       </Slider.Track>
-      <Slider.Thumb />
+      <Slider.Thumb bg="#9D14FF" />
     </Slider>
   );
 };

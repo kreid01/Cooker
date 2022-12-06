@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { QueryClient, QueryClientProvider, useQuery } from "react-query";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
@@ -13,6 +13,13 @@ import store from "./store/store";
 import { Text } from "native-base";
 import { SingleRecipeScreen } from "./screens/SingleRecipeScreen";
 import { SafeAreaView } from "react-native";
+import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
+import {
+  faSearch,
+  faHome,
+  faUserAlt,
+  faCalendarAlt,
+} from "@fortawesome/free-solid-svg-icons";
 
 export default function App() {
   const Stack = createNativeStackNavigator();
@@ -73,7 +80,7 @@ export default function App() {
                     headerStyle: {
                       backgroundColor: "#D6C9FF",
                     },
-                    headerTintColor: "black",
+                    headerTintColor: "white",
                     headerTitleStyle: {
                       fontWeight: "bold",
                     },
@@ -86,9 +93,9 @@ export default function App() {
                   name="Registration"
                   options={{
                     headerStyle: {
-                      backgroundColor: "#f4511e",
+                      backgroundColor: "#D6C9FF",
                     },
-                    headerTintColor: "#fff",
+                    headerTintColor: "white",
                     headerTitleStyle: {
                       fontWeight: "bold",
                     },
@@ -97,6 +104,15 @@ export default function App() {
                 ></Stack.Screen>
 
                 <Stack.Screen
+                  options={{
+                    headerStyle: {
+                      backgroundColor: "#D6C9FF",
+                    },
+                    headerTintColor: "#fff",
+                    headerTitleStyle: {
+                      fontWeight: "bold",
+                    },
+                  }}
                   name="Login"
                   component={LoginScreen}
                 ></Stack.Screen>
@@ -106,7 +122,7 @@ export default function App() {
                     headerStyle: {
                       backgroundColor: "#D6C9FF",
                     },
-                    headerTintColor: "black",
+                    headerTintColor: "#fff",
                     headerTitleStyle: {
                       fontWeight: "bold",
                     },

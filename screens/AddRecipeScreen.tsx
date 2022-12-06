@@ -1,14 +1,14 @@
-import React, { useState } from "react";
-import { useMutation, useQueryClient } from "react-query";
+import React, { useState, useEffect } from "react";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 import axios from "axios";
 import { Formik } from "formik";
 import { Input, Button, Radio, View, Text, ScrollView } from "native-base";
-
-import { Recipe } from "../consts/interfaces";
 import { Sliders } from "../components/Sliders";
 
+import { Recipe } from "../consts/interfaces";
+
 type MultiValues = {
-  ingredients: string[];
+  ingredients: string;
   singleIngredient: string;
   steps: string[];
   singleStep: string;
@@ -31,14 +31,10 @@ export const AddRecipeScreen = () => {
     prepTime: 20,
     cookingTime: 20,
   });
-
   const addIngredient = () => {
     setMultiValues((prevState) => ({
       ...prevState,
-      ingredients: [
-        ...(prevState?.ingredients as Array<string>),
-        multiValues.singleIngredient,
-      ],
+      ingredients: `${prevState?.ingredients},  ${multiValues.singleIngredient}`,
       singleIngredient: "",
     }));
   };
@@ -46,24 +42,24 @@ export const AddRecipeScreen = () => {
   const addStep = () => {
     setMultiValues((prevState) => ({
       ...prevState,
-      steps: [...(prevState?.steps as Array<string>), multiValues.singleStep],
+      steps: [...(prevState.steps as Array<string>), multiValues.singleStep],
       singleStep: "",
     }));
   };
 
   const [multiValues, setMultiValues] = useState<MultiValues>({
-    ingredients: [],
+    ingredients: "",
     singleIngredient: "",
     steps: [],
     singleStep: "",
   });
 
   const removeIngredient = (i: number) => {
-    const changeArr = [...multiValues.ingredients];
-    changeArr.splice(i, 1);
+    const changeArr = multiValues.ingredients.split("1");
+    const changeArr2 = changeArr.splice(i, 1).join("1");
     setMultiValues((prevState) => ({
       ...prevState,
-      ingredients: changeArr,
+      ingredients: changeArr2,
     }));
   };
 
@@ -119,6 +115,7 @@ export const AddRecipeScreen = () => {
           <View className="mx-10 mt-5  overflow-y-scroll">
             <Input
               my={2}
+              focusOutlineColor="#9D14FF"
               placeholder="Recipe Title"
               className="h-10"
               onChangeText={handleChange("title")}
@@ -126,6 +123,7 @@ export const AddRecipeScreen = () => {
               value-={values.title}
             />
             <Input
+              focusOutlineColor="#9D14FF"
               my={2}
               placeholder="Ingredients"
               onBlur={handleBlur("ingredients")}
@@ -137,17 +135,16 @@ export const AddRecipeScreen = () => {
                 }))
               }
               InputRightElement={
-                <Button onPress={() => addIngredient()}>Add</Button>
+                <Button bgColor="#9D14FF" onPress={() => addIngredient()}>
+                  Add
+                </Button>
               }
             />
             <View>
-              {multiValues?.ingredients.map((ingredient, i) => {
+              {multiValues?.ingredients.split("  ").map((ingredient, i) => {
                 return (
-                  <View className="flex flex-row justify-between">
-                    <Text
-                      key={i}
-                      className="text-black font-semibold text-md mx-2 my-2 border-b-[1px] border-gray-200"
-                    >
+                  <View className="flex flex-row justify-between" key={i}>
+                    <Text className="text-black font-semibold text-md mx-2 my-2 border-b-[1px] border-gray-200">
                       - {ingredient}
                     </Text>
                     <Button
@@ -162,6 +159,7 @@ export const AddRecipeScreen = () => {
               })}
             </View>
             <Input
+              focusOutlineColor="#9D14FF"
               placeholder="Steps"
               onBlur={handleBlur("steps")}
               value={multiValues.singleStep}
@@ -172,21 +170,23 @@ export const AddRecipeScreen = () => {
                   singleStep: text,
                 }))
               }
-              InputRightElement={<Button onPress={() => addStep()}>Add</Button>}
+              InputRightElement={
+                <Button bgColor="#9D14FF" onPress={() => addStep()}>
+                  Add
+                </Button>
+              }
             />
             <View>
               {multiValues?.steps.map((step, i) => {
                 return (
-                  <View className="flex flex-row justify-between">
-                    <Text
-                      key={i}
-                      className="text-black font-semibold text-md mx-2 my-2  max-w-[70%]"
-                    >
+                  <View className="flex flex-row justify-between" key={i}>
+                    <Text className="text-black font-semibold text-md mx-2 my-2  max-w-[70%]">
                       {i + 1}. {step}
                     </Text>
                     <Button
                       variant="ghost"
                       className="-mt-1"
+                      bgColor="#9D14FF"
                       onPress={() => removeStep(i)}
                     >
                       Remove
@@ -200,6 +200,7 @@ export const AddRecipeScreen = () => {
               setSliderValues={setSliderValues}
             />
             <Input
+              focusOutlineColor="#9D14FF"
               placeholder="Image URL"
               className="h-10 w-[100vw]"
               my={2}
@@ -215,16 +216,17 @@ export const AddRecipeScreen = () => {
               value={values.isVegetarian}
               onChange={handleChange("isVegetarian")}
             >
-              <Radio value={"true"} my={1}>
+              <Radio colorScheme="indigo" value={"true"} my={1}>
                 Is Vegetarian
               </Radio>
-              <Radio value={"false"} my={1}>
+              <Radio colorScheme="indigo" value={"false"} my={1}>
                 Is Not Vegetarian
               </Radio>
             </Radio.Group>
 
             <Button
               spinnerPlacement="end"
+              bgColor="#9D14FF"
               isLoadingText="Submitting"
               onPress={() => handleSubmit()}
             >

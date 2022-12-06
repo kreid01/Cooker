@@ -22,7 +22,7 @@ import { toFormikValidationSchema } from "zod-formik-adapter";
 
 const createUser = async (queryKey: User) => {
   const { data: response } = await axios.post(
-    "http://192.168.0.73:4000/users/register",
+    "http://192.168.0.73:4001/users/register",
     queryKey
   );
   return response.data;
@@ -227,7 +227,7 @@ export const RegisterScreen = ({ navigation }: any) => {
             mt={5}
             onPress={() => handleSubmit()}
             isLoadingText="Submitting"
-            colorScheme="indigo"
+            bgColor="#9D14FF"
           >
             Register
           </Button>
@@ -246,7 +246,7 @@ export const RegisterScreen = ({ navigation }: any) => {
               variant="ghost"
               mt="-10px"
               _text={{
-                color: "indigo.500",
+                color: "#9D14FF",
                 fontWeight: "medium",
                 fontSize: "sm",
               }}

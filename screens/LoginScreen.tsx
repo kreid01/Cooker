@@ -19,6 +19,7 @@ import { useMutation, useQueryClient } from "react-query";
 import { MaterialIcons } from "@expo/vector-icons";
 import { setAccessToken } from "../utills/accessToken";
 import { useDispatch } from "react-redux";
+import { setUser } from "../slices/userSlice";
 
 export type Login = {
   email: string;
@@ -30,8 +31,16 @@ const loginUser = async (user: Login) => {
     "http://192.168.0.73:4000/users/login",
     user
   );
+  const { data: userInfo } = await axios.get(
+    "http://192.168.0.73:4000/users/auth",
+    {
+      headers: {
+        authorization: "Bearer " + data,
+      },
+    }
+  );
 
-  return data;
+  return { token: data, user: userInfo };
 };
 
 export const LoginScreen = ({ navigation }: any) => {
@@ -40,7 +49,8 @@ export const LoginScreen = ({ navigation }: any) => {
   const dispatch = useDispatch();
   const { mutate, isLoading } = useMutation(loginUser, {
     onSuccess: (data) => {
-      setAccessToken(data);
+      setAccessToken(data?.token);
+      dispatch(setUser(data.user));
       navigation.navigate("Home");
     },
     onError: () => {
@@ -118,7 +128,7 @@ export const LoginScreen = ({ navigation }: any) => {
                   _text={{
                     fontSize: "xs",
                     fontWeight: "500",
-                    color: "indigo.500",
+                    color: "#9D14FF",
                   }}
                   alignSelf="flex-end"
                   mt="1"
@@ -126,11 +136,7 @@ export const LoginScreen = ({ navigation }: any) => {
                   Forget Password?
                 </Link>
               </FormControl>
-              <Button
-                onPress={() => handleSubmit()}
-                mt="2"
-                colorScheme="indigo"
-              >
+              <Button onPress={() => handleSubmit()} mt="2" bgColor="#9D14FF">
                 Sign in
               </Button>
               <HStack mt="6" justifyContent="center">
@@ -147,7 +153,7 @@ export const LoginScreen = ({ navigation }: any) => {
                   variant="ghost"
                   mt="-10px"
                   _text={{
-                    color: "indigo.500",
+                    color: "#9D14FF",
                     fontWeight: "medium",
                     fontSize: "sm",
                   }}

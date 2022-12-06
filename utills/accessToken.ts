@@ -1,5 +1,9 @@
 import * as SecureStore from "expo-secure-store";
 
+export const resetAccessToken = async () => {
+  await SecureStore.deleteItemAsync("token");
+};
+
 export const setAccessToken = async (token: string) => {
   await SecureStore.setItemAsync("token", JSON.stringify(token));
 };

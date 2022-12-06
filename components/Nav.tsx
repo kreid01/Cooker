@@ -2,7 +2,7 @@ import { Button, HStack, View } from "native-base";
 import { useDispatch, useSelector } from "react-redux";
 import { setUser } from "../slices/userSlice";
 import { RootState } from "../store/store";
-import { setAccessToken } from "../utills/accessToken";
+import { resetAccessToken, setAccessToken } from "../utills/accessToken";
 import React from "react";
 
 export const Nav = ({ navigation }: any) => {
@@ -11,7 +11,7 @@ export const Nav = ({ navigation }: any) => {
   const dispatch = useDispatch();
 
   const logout = () => {
-    setAccessToken("");
+    resetAccessToken();
     dispatch(setUser(null));
   };
 
@@ -32,6 +32,7 @@ export const Nav = ({ navigation }: any) => {
           <Button
             _text={{
               color: "#FFFFFF",
+              fontWeight: "bold",
             }}
             variant="ghost"
             onPress={() => navigation.navigate("Registration")}
