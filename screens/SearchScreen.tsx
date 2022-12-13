@@ -8,21 +8,25 @@ import { TouchableOpacity } from "react-native";
 import ExpoFastImage from "expo-fast-image";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faKitchenSet, faPlateWheat } from "@fortawesome/free-solid-svg-icons";
+import { useDebounce } from "../hooks/useDebounce";
 
 const searchRecipes = async ({ queryKey }: any) => {
-  const { data } = await axios.get(
-    `http://192.168.0.73:4000/recipes?search=${queryKey[1]}`
-  );
-  return data;
+  if (queryKey[1] && queryKey[1].length > 0) {
+    const { data } = await axios.get(
+      `http://ec2-44-203-24-124.compute-1.amazonaws.com/recipes?search=${queryKey[1]}`
+    );
+    return data;
+  }
 };
 
 export const SearchScreen = ({ navigation }: any) => {
   const [search, setSearch] = useState("");
-  const { data } = useQuery(["recipes", search], searchRecipes);
+  const debouncedSearch = useDebounce(search, 500);
+  const { data } = useQuery(["recipes", debouncedSearch], searchRecipes);
 
   return (
-    <View className="mt-6">
-      <View bgColor="#D6C9FF" h="12">
+    <View>
+      <View bgColor="#D6C9FF" h="12" marginTop={4}>
         <Input
           my="auto"
           mx={3}

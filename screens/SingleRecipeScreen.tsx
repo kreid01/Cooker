@@ -1,32 +1,46 @@
 import axios from "axios";
-import { View, Text } from "native-base";
-import { useQuery } from "react-query";
-import React from "react";
+import { View, Text, Button } from "native-base";
+import { useMutation, useQuery } from "react-query";
+import React, { useState } from "react";
 //@ts-ignore
 import ExpoFastImage from "expo-fast-image";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import {
   faCutlery,
+  faHeart,
   faKitchenSet,
   faPlateWheat,
 } from "@fortawesome/free-solid-svg-icons";
+import {
+  getLikedRecipes,
+  likeRecipe,
+  unlikeRecipe,
+} from "../utills/likedRecipes";
 
+const getLikes = async () => {
+  const recipes = await getLikedRecipes();
+  return recipes.toString();
+};
 const getRecipe = async ({ queryKey }: any) => {
   const { data } = await axios.get(
-    `http://192.168.0.73:4000/recipes/${parseInt(queryKey[1])}`
+    `http://ec2-44-203-24-124.compute-1.amazonaws.com/recipes/${parseInt(
+      queryKey[1]
+    )}`
   );
   return data;
 };
 
-export const SingleRecipeScreen = ({ route, navigation }: any) => {
+export const SingleRecipeScreen = ({ route }: any) => {
   const { id } = route.params;
   const { data, status } = useQuery(["recipes", id], getRecipe);
+  const { data: likedRecipes, isSuccess } = useQuery(["recipes"], getLikes);
 
-  if (status === "success") {
+  if (status === "success" && isSuccess) {
     const ingredients = data.ingredients.split(",").map((i: string) => {
       return <Text key={i}> - {i}</Text>;
     });
 
+    const [isLiked, setIsLiked] = useState(likedRecipes.includes(id));
     const steps = data.steps.split(",").map((s: string, i: number) => {
       return (
         <Text key={i}>
@@ -35,6 +49,16 @@ export const SingleRecipeScreen = ({ route, navigation }: any) => {
         </Text>
       );
     });
+
+    const handleLiked = () => {
+      setIsLiked(true);
+      likeRecipe(id);
+    };
+
+    const handleUnlike = () => {
+      setIsLiked(false);
+      unlikeRecipe(id);
+    };
 
     return (
       <View>
@@ -45,8 +69,25 @@ export const SingleRecipeScreen = ({ route, navigation }: any) => {
             uri: data.imageUrl,
           }}
         />
+        <View className="flex flex-row">
+          <Text className="ml-5 font-bold text-3xl mt-5">{data.title}</Text>
+          {isLiked ? (
+            <Button
+              onPress={() => handleUnlike()}
+              className="bg-gray-300 rounded-full text-red-500 w-10 h-10 ml-auto mr-6 mt-2 self-center"
+            >
+              <FontAwesomeIcon color="red" size={20} icon={faHeart} />
+            </Button>
+          ) : (
+            <Button
+              onPress={() => handleLiked()}
+              className="bg-gray-300 rounded-full w-10 h-10 ml-auto mr-6 mt-2 self-center"
+            >
+              <FontAwesomeIcon size={20} icon={faHeart} />
+            </Button>
+          )}
+        </View>
 
-        <Text className="ml-5 font-bold text-3xl mt-5">{data.title}</Text>
         <View className="mx-5 mt-5 p-5 bg-gray-200 ">
           <View className="flex flex-row justify-between">
             <Text fontSize="lg">

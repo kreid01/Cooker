@@ -16,7 +16,7 @@ type MultiValues = {
 
 const addRecipe = async (queryKey: Recipe) => {
   const { data: response } = await axios.post(
-    "http://192.168.0.73:4000/recipes",
+    "http://ec2-44-203-24-124.compute-1.amazonaws.com//recipes",
     queryKey
   );
   return response.data;
@@ -34,7 +34,7 @@ export const AddRecipeScreen = () => {
   const addIngredient = () => {
     setMultiValues((prevState) => ({
       ...prevState,
-      ingredients: `${prevState?.ingredients},  ${multiValues.singleIngredient}`,
+      ingredients: `${prevState?.ingredients} ${multiValues.singleIngredient}`,
       singleIngredient: "",
     }));
   };
@@ -53,13 +53,12 @@ export const AddRecipeScreen = () => {
     steps: [],
     singleStep: "",
   });
-
-  const removeIngredient = (i: number) => {
-    const changeArr = multiValues.ingredients.split("1");
-    const changeArr2 = changeArr.splice(i, 1).join("1");
+  const regex = /(\d+g?x? [ a-z ]*,?[, a-zA-z%-]*)/;
+  const removeIngredient = (ingredient: string) => {
+    const changeArr = multiValues.ingredients.replace(ingredient, "");
     setMultiValues((prevState) => ({
       ...prevState,
-      ingredients: changeArr2,
+      ingredients: changeArr,
     }));
   };
 
@@ -110,6 +109,7 @@ export const AddRecipeScreen = () => {
       {({ handleChange, handleBlur, handleSubmit, values }) => (
         <ScrollView
           keyboardShouldPersistTaps="always"
+          marginTop="6"
           automaticallyAdjustKeyboardInsets={true}
         >
           <View className="mx-10 mt-5  overflow-y-scroll">
@@ -141,21 +141,23 @@ export const AddRecipeScreen = () => {
               }
             />
             <View>
-              {multiValues?.ingredients.split("  ").map((ingredient, i) => {
-                return (
-                  <View className="flex flex-row justify-between" key={i}>
-                    <Text className="text-black font-semibold text-md mx-2 my-2 border-b-[1px] border-gray-200">
-                      - {ingredient}
-                    </Text>
-                    <Button
-                      variant="ghost"
-                      className="-mt-1"
-                      onPress={() => removeIngredient(i)}
-                    >
-                      Remove
-                    </Button>
-                  </View>
-                );
+              {multiValues?.ingredients.split(regex).map((ingredient, i) => {
+                if (ingredient.length > 5) {
+                  return (
+                    <View className="flex flex-row justify-between" key={i}>
+                      <Text className="text-black font-semibold w-[70%] text-md mx-2 my-2 border-b-[1px] border-gray-200">
+                        - {ingredient}
+                      </Text>
+                      <Button
+                        variant="ghost"
+                        className="-mt-1"
+                        onPress={() => removeIngredient(ingredient)}
+                      >
+                        Remove
+                      </Button>
+                    </View>
+                  );
+                }
               })}
             </View>
             <Input

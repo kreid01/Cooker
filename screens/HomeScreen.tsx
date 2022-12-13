@@ -1,26 +1,30 @@
 import React, { useEffect } from "react";
 import { useQuery } from "react-query";
 import axios from "axios";
-import { FlatList, Image, StatusBar, Text, View } from "native-base";
-import { RefreshControl } from "react-native";
-import { TouchableOpacity } from "react-native";
+import { FlatList, Image, Text, View } from "native-base";
+import { RefreshControl, TouchableOpacity } from "react-native";
 import { getAccessToken } from "../utills/accessToken";
 import { useDispatch } from "react-redux";
 import { setUser } from "../slices/userSlice";
 import { Recipe } from "../consts/interfaces";
 
 const getRecipe = async () => {
-  const { data } = await axios.get("http://192.168.0.73:4000/recipes?search=");
+  const { data } = await axios.get(
+    "http://ec2-44-203-24-124.compute-1.amazonaws.com/recipes?search="
+  );
   return data;
 };
 
 const getUser = async () => {
   const token = await getAccessToken();
-  const { data } = await axios.get("http://192.168.0.73:4000/users/auth", {
-    headers: {
-      authorization: "Bearer " + token,
-    },
-  });
+  const { data } = await axios.get(
+    "http://ec2-44-203-24-124.compute-1.amazonaws.com/users/auth",
+    {
+      headers: {
+        authorization: "Bearer " + token,
+      },
+    }
+  );
   return await data;
 };
 
@@ -34,7 +38,7 @@ export const HomeScreen = ({ navigation }: any) => {
   }, [user]);
 
   return (
-    <View className="relative z-10">
+    <View className="relative z-10 mt-5">
       <FlatList
         numColumns={2}
         renderItem={({ item, index }: { item: Recipe; index: number }) => (

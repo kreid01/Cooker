@@ -40,8 +40,8 @@ export const Sliders: React.FC<Props> = ({ sliderValues, setSliderValues }) => {
       <Text> {sliderValues.servings} servings</Text>
       <MySlider
         handleChange={handleChange}
-        maxValue={1}
-        minValue={20}
+        maxValue={20}
+        minValue={1}
         defaultValue={4}
         type="servings"
       />

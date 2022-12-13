@@ -22,7 +22,7 @@ import { toFormikValidationSchema } from "zod-formik-adapter";
 
 const createUser = async (queryKey: User) => {
   const { data: response } = await axios.post(
-    "http://192.168.0.73:4001/users/register",
+    "http://ec2-44-203-24-124.compute-1.amazonaws.com/users/register",
     queryKey
   );
   return response.data;

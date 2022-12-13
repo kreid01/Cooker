@@ -9,24 +9,25 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { LoginScreen } from "./screens/LoginScreen";
 import { setAccessToken } from "./utills/accessToken";
-import { Provider } from "react-redux";
-import store from "./store/store";
+import { Provider, useSelector } from "react-redux";
+import store, { RootState } from "./store/store";
 import { SingleRecipeScreen } from "./screens/SingleRecipeScreen";
 import { SafeAreaView, TouchableOpacity } from "react-native";
 import * as Animatable from "react-native-animatable";
 import { Icons } from "./components/Icons";
 import { navStyles } from "./styles/BottomNavStyles";
 import { SearchScreen } from "./screens/SearchScreen";
+import { LikedRecipesScreen } from "./screens/LikedRecipesScreen";
 
 export const LogoTitle = () => {
   return (
-    <View className="bg-[#D6C9FF] h-[5vh] z-2 -ml-5 mb-10 relative">
+    <View className="bg-[#D6C9FF] min-h-[7vh] z-2 -ml-5 relative">
       <Image
         source={{
           uri: "https://elephant.art/wp-content/uploads/2020/02/wp4154552.png",
         }}
         alt=""
-        className="w-[200vw]  h-[8vh]"
+        className="w-[200vw]  h-[6vh]"
       />
     </View>
   );
@@ -65,7 +66,7 @@ export default function App() {
       label: "Like",
       type: Icons.Feather,
       icon: "heart",
-      component: RegisterScreen,
+      component: LikedRecipesScreen,
     },
     {
       route: "Account",
@@ -77,7 +78,7 @@ export default function App() {
   ];
 
   useEffect(() => {
-    fetch("http://localhost:4000/refresh_token", {
+    fetch("http://ec2-44-203-24-124.compute-1.amazonaws.com/refresh_token", {
       method: "POST",
       credentials: "include",
       headers: {
@@ -96,8 +97,8 @@ export default function App() {
 
   const animate1 = {
     0: { scale: 0.5, translateY: 8 },
-    0.92: { translateY: -34 },
-    1: { scale: 1.2, translateY: -24 },
+    0.92: { translateY: -20 },
+    1: { scale: 1.2, translateY: -12 },
   };
   const animate2 = {
     0: { scale: 1.2, translateY: -24 },
@@ -159,7 +160,11 @@ export default function App() {
           style={navStyles.container}
         >
           <View style={navStyles.btn}>
-            <Animatable.View ref={circleRef} style={navStyles.circle} />
+            <Animatable.View
+              duration={400}
+              ref={circleRef}
+              style={navStyles.circle}
+            />
             <Icon
               type={item.type}
               name={item.icon}
@@ -212,7 +217,7 @@ export default function App() {
                   options={{
                     headerTitle: (props) => <LogoTitle />,
                   }}
-                  name="Root"
+                  name="Back"
                   component={Root}
                 />
                 <Stack.Screen
@@ -227,6 +232,20 @@ export default function App() {
                   }}
                   name="Recipe"
                   component={SingleRecipeScreen}
+                ></Stack.Screen>
+
+                <Stack.Screen
+                  options={{
+                    headerStyle: {
+                      backgroundColor: "#D6C9FF",
+                    },
+                    headerTintColor: "#fff",
+                    headerTitleStyle: {
+                      fontWeight: "bold",
+                    },
+                  }}
+                  name="Registration"
+                  component={RegisterScreen}
                 ></Stack.Screen>
               </Stack.Navigator>
             </NavigationContainer>

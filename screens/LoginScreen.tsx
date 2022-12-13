@@ -9,6 +9,7 @@ import {
   Link,
   Button,
   HStack,
+  View,
   Center,
   Pressable,
   Icon,
@@ -18,8 +19,10 @@ import { Formik } from "formik";
 import { useMutation, useQueryClient } from "react-query";
 import { MaterialIcons } from "@expo/vector-icons";
 import { setAccessToken } from "../utills/accessToken";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setUser } from "../slices/userSlice";
+import { RootState } from "../store/store";
+import { LikedRecipesScreen } from "./LikedRecipesScreen";
 
 export type Login = {
   email: string;
@@ -28,11 +31,11 @@ export type Login = {
 
 const loginUser = async (user: Login) => {
   const { data } = await axios.post(
-    "http://192.168.0.73:4000/users/login",
+    "http://ec2-44-203-24-124.compute-1.amazonaws.com/users/login",
     user
   );
   const { data: userInfo } = await axios.get(
-    "http://192.168.0.73:4000/users/auth",
+    "http://ec2-44-203-24-124.compute-1.amazonaws.com/users/auth",
     {
       headers: {
         authorization: "Bearer " + data,
@@ -45,6 +48,8 @@ const loginUser = async (user: Login) => {
 
 export const LoginScreen = ({ navigation }: any) => {
   const [show, setShow] = React.useState<Boolean>(false);
+  const currentUser = useSelector((state: RootState) => state.user.value);
+  alert(currentUser?.firstName);
   const queryClient = useQueryClient();
   const dispatch = useDispatch();
   const { mutate, isLoading } = useMutation(loginUser, {
@@ -60,7 +65,7 @@ export const LoginScreen = ({ navigation }: any) => {
       queryClient.invalidateQueries("create");
     },
   });
-  return (
+  return currentUser === null ? (
     <Formik
       initialValues={{
         email: "",
@@ -167,5 +172,7 @@ export const LoginScreen = ({ navigation }: any) => {
         </Center>
       )}
     </Formik>
+  ) : (
+    <LikedRecipesScreen />
   );
 };
