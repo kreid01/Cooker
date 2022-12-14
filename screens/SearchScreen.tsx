@@ -1,14 +1,15 @@
+import { faKitchenSet, faPlateWheat } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import axios from "axios";
-import { FlatList, Input, View, Text } from "native-base";
-import React, { useState } from "react";
+import { FlatList, Input, Text, View } from "native-base";
+import { useState } from "react";
+import { TouchableOpacity } from "react-native";
 import { useQuery } from "react-query";
 import { Recipe } from "../consts/interfaces";
-import { TouchableOpacity } from "react-native";
-//@ts-ignore
-import ExpoFastImage from "expo-fast-image";
-import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
-import { faKitchenSet, faPlateWheat } from "@fortawesome/free-solid-svg-icons";
 import { useDebounce } from "../hooks/useDebounce";
+import React from "react";
+// @ts-ignore
+import ExpoFastImage from "expo-fast-image";
 
 const searchRecipes = async ({ queryKey }: any) => {
   if (queryKey[1] && queryKey[1].length > 0) {

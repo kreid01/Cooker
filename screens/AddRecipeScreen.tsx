@@ -1,14 +1,21 @@
-import React, { useState, useEffect } from "react";
-import { useMutation, useQuery, useQueryClient } from "react-query";
+import React, { useState } from "react";
+import { useMutation, useQueryClient } from "react-query";
 import axios from "axios";
 import { Formik } from "formik";
-import { Input, Button, Radio, View, Text, ScrollView } from "native-base";
+import {
+  Input,
+  Button,
+  Radio,
+  View,
+  Text,
+  ScrollView,
+  TextArea,
+} from "native-base";
 import { Sliders } from "../components/Sliders";
-
 import { Recipe } from "../consts/interfaces";
 
 type MultiValues = {
-  ingredients: string;
+  ingredients: string[];
   singleIngredient: string;
   steps: string[];
   singleStep: string;
@@ -16,7 +23,7 @@ type MultiValues = {
 
 const addRecipe = async (queryKey: Recipe) => {
   const { data: response } = await axios.post(
-    "http://ec2-44-203-24-124.compute-1.amazonaws.com//recipes",
+    "http://ec2-44-203-24-124.compute-1.amazonaws.com/recipes",
     queryKey
   );
   return response.data;
@@ -31,12 +38,35 @@ export const AddRecipeScreen = () => {
     prepTime: 20,
     cookingTime: 20,
   });
+
+  const [multiValues, setMultiValues] = useState<MultiValues>({
+    ingredients: [],
+    singleIngredient: "",
+    steps: [],
+    singleStep: "",
+  });
+
+  const regex = /(\d+g?x? [ a-z ]*,?[, a-zA-z%-]*)/;
   const addIngredient = () => {
-    setMultiValues((prevState) => ({
-      ...prevState,
-      ingredients: `${prevState?.ingredients} ${multiValues.singleIngredient}`,
-      singleIngredient: "",
-    }));
+    const ingredients = /\d/.test(multiValues.singleIngredient)
+      ? multiValues.singleIngredient.split(regex)
+      : multiValues.singleIngredient;
+    if (typeof ingredients === "string") {
+      setMultiValues((prevState) => ({
+        ...prevState,
+        ingredients: [...(prevState.ingredients as Array<string>), ingredients],
+        singleIngredient: "",
+      }));
+    } else {
+      setMultiValues((prevState) => ({
+        ...prevState,
+        ingredients: [
+          ...(prevState.ingredients as Array<string>),
+          ...ingredients,
+        ],
+        singleIngredient: "",
+      }));
+    }
   };
 
   const addStep = () => {
@@ -47,15 +77,9 @@ export const AddRecipeScreen = () => {
     }));
   };
 
-  const [multiValues, setMultiValues] = useState<MultiValues>({
-    ingredients: "",
-    singleIngredient: "",
-    steps: [],
-    singleStep: "",
-  });
-  const regex = /(\d+g?x? [ a-z ]*,?[, a-zA-z%-]*)/;
-  const removeIngredient = (ingredient: string) => {
-    const changeArr = multiValues.ingredients.replace(ingredient, "");
+  const removeIngredient = (index: number) => {
+    const changeArr = [...multiValues.ingredients];
+    changeArr.splice(index, 1);
     setMultiValues((prevState) => ({
       ...prevState,
       ingredients: changeArr,
@@ -100,7 +124,7 @@ export const AddRecipeScreen = () => {
         mutate({
           ...values,
           ingredients: multiValues.ingredients.toString(),
-          steps: multiValues.steps.toString(),
+          steps: multiValues.steps.join("@"),
           isVegetarian: values.isVegetarian === "true" ? true : false,
           ...sliderValues,
         })
@@ -141,17 +165,17 @@ export const AddRecipeScreen = () => {
               }
             />
             <View>
-              {multiValues?.ingredients.split(regex).map((ingredient, i) => {
-                if (ingredient.length > 5) {
+              {multiValues?.ingredients.map((ingredient, index) => {
+                if (ingredient.length > 3) {
                   return (
-                    <View className="flex flex-row justify-between" key={i}>
+                    <View className="flex flex-row justify-between" key={index}>
                       <Text className="text-black font-semibold w-[70%] text-md mx-2 my-2 border-b-[1px] border-gray-200">
                         - {ingredient}
                       </Text>
                       <Button
                         variant="ghost"
                         className="-mt-1"
-                        onPress={() => removeIngredient(ingredient)}
+                        onPress={() => removeIngredient(index)}
                       >
                         Remove
                       </Button>
@@ -160,7 +184,8 @@ export const AddRecipeScreen = () => {
                 }
               })}
             </View>
-            <Input
+            <TextArea
+              autoCompleteType="auto-complete"
               focusOutlineColor="#9D14FF"
               placeholder="Steps"
               onBlur={handleBlur("steps")}
@@ -173,7 +198,7 @@ export const AddRecipeScreen = () => {
                 }))
               }
               InputRightElement={
-                <Button bgColor="#9D14FF" onPress={() => addStep()}>
+                <Button h={20} bgColor="#9D14FF" onPress={() => addStep()}>
                   Add
                 </Button>
               }
@@ -188,7 +213,6 @@ export const AddRecipeScreen = () => {
                     <Button
                       variant="ghost"
                       className="-mt-1"
-                      bgColor="#9D14FF"
                       onPress={() => removeStep(i)}
                     >
                       Remove

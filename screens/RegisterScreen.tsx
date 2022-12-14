@@ -1,23 +1,21 @@
-import { useState } from "react";
-import React from "react";
-import { useQueryClient } from "react-query";
-import { object, string } from "zod";
-import { useMutation } from "react-query";
+import { MaterialIcons } from "@expo/vector-icons";
 import axios from "axios";
 import { Formik } from "formik";
 import {
-  Input,
-  View,
   Button,
   FormControl,
-  Icon,
-  Pressable,
-  Text,
-  WarningOutlineIcon,
   Heading,
   HStack,
+  Icon,
+  Input,
+  Pressable,
+  Text,
+  View,
+  WarningOutlineIcon,
 } from "native-base";
-import { MaterialIcons } from "@expo/vector-icons";
+import { useState } from "react";
+import { useMutation, useQueryClient } from "react-query";
+import { object, string } from "zod";
 import { toFormikValidationSchema } from "zod-formik-adapter";
 
 const createUser = async (queryKey: User) => {

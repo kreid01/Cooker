@@ -6,6 +6,7 @@ export interface IUser {
     email: string | null;
     firstName: string | null;
     lastName: string | null;
+    likedRecipes: string | null;
   } | null;
 }
 
@@ -14,6 +15,7 @@ export type User = {
   email: string | null;
   firstName: string | null;
   lastName: string | null;
+  likedRecipes: string | null;
 };
 
 export const initialState: IUser = {
@@ -22,6 +24,7 @@ export const initialState: IUser = {
     email: null,
     firstName: null,
     lastName: null,
+    likedRecipes: null,
   },
 };
 

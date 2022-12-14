@@ -1,12 +1,13 @@
-import React, { useEffect } from "react";
-import { useQuery } from "react-query";
 import axios from "axios";
 import { FlatList, Image, Text, View } from "native-base";
+import { useEffect } from "react";
 import { RefreshControl, TouchableOpacity } from "react-native";
-import { getAccessToken } from "../utills/accessToken";
+import { useQuery } from "react-query";
 import { useDispatch } from "react-redux";
-import { setUser } from "../slices/userSlice";
 import { Recipe } from "../consts/interfaces";
+import { setUser } from "../slices/userSlice";
+import { getAccessToken } from "../utills/accessToken";
+import React from "react";
 
 const getRecipe = async () => {
   const { data } = await axios.get(

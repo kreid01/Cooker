@@ -32,8 +32,8 @@ export const Sliders: React.FC<Props> = ({ sliderValues, setSliderValues }) => {
       <Text>Calories: {sliderValues.calories} per serving</Text>
       <MySlider
         handleChange={handleChange}
-        maxValue={1000}
-        minValue={100}
+        maxValue={600}
+        minValue={50}
         defaultValue={300}
         type="calories"
       />
@@ -49,9 +49,9 @@ export const Sliders: React.FC<Props> = ({ sliderValues, setSliderValues }) => {
       <Text>Preparation Time: {sliderValues.prepTime} mins</Text>
       <MySlider
         handleChange={handleChange}
-        maxValue={120}
-        minValue={1}
-        defaultValue={20}
+        maxValue={90}
+        minValue={5}
+        defaultValue={10}
         type="prepTime"
       />
 
@@ -59,9 +59,9 @@ export const Sliders: React.FC<Props> = ({ sliderValues, setSliderValues }) => {
 
       <MySlider
         handleChange={handleChange}
-        maxValue={120}
-        minValue={1}
-        defaultValue={20}
+        maxValue={90}
+        minValue={5}
+        defaultValue={10}
         type="cookingTime"
       />
     </View>

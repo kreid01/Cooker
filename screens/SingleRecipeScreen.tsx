@@ -1,21 +1,18 @@
-import axios from "axios";
-import { View, Text, Button } from "native-base";
-import { useMutation, useQuery } from "react-query";
-import React, { useState } from "react";
-//@ts-ignore
-import ExpoFastImage from "expo-fast-image";
-import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import {
   faCutlery,
   faHeart,
   faKitchenSet,
   faPlateWheat,
 } from "@fortawesome/free-solid-svg-icons";
-import {
-  getLikedRecipes,
-  likeRecipe,
-  unlikeRecipe,
-} from "../utills/likedRecipes";
+import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
+import axios from "axios";
+import { Button, ScrollView, Text, View } from "native-base";
+import { useEffect, useState } from "react";
+import { useMutation, useQuery } from "react-query";
+//@ts-ignore
+import ExpoFastImage from "expo-fast-image";
+import { getLikedRecipes, setLikedRecipe } from "../utills/likedRecipes";
+import React from "react";
 
 const getLikes = async () => {
   const recipes = await getLikedRecipes();
@@ -30,18 +27,31 @@ const getRecipe = async ({ queryKey }: any) => {
   return data;
 };
 
+const setRecipes = async (values: string) => {
+  await setLikedRecipe(values);
+};
+
 export const SingleRecipeScreen = ({ route }: any) => {
   const { id } = route.params;
   const { data, status } = useQuery(["recipes", id], getRecipe);
   const { data: likedRecipes, isSuccess } = useQuery(["recipes"], getLikes);
+  const [isLiked, setIsLiked] = useState(false);
+  const { mutate } = useMutation(setRecipes);
+
+  useEffect(() => {
+    setIsLiked(likedRecipes.includes(id));
+  }, [likedRecipes]);
 
   if (status === "success" && isSuccess) {
-    const ingredients = data.ingredients.split(",").map((i: string) => {
-      return <Text key={i}> - {i}</Text>;
-    });
+    const ingredients = data.ingredients
+      .split(",")
+      .map((ingredient: string, i: number) => {
+        if (ingredient.length > 3) {
+          return <Text key={i}> - {ingredient}</Text>;
+        }
+      });
 
-    const [isLiked, setIsLiked] = useState(likedRecipes.includes(id));
-    const steps = data.steps.split(",").map((s: string, i: number) => {
+    const steps = data.steps.split("@").map((s: string, i: number) => {
       return (
         <Text key={i}>
           {" "}
@@ -52,25 +62,29 @@ export const SingleRecipeScreen = ({ route }: any) => {
 
     const handleLiked = () => {
       setIsLiked(true);
-      likeRecipe(id);
+      const newLikedRecipes = `${likedRecipes}${id},`;
+      mutate(newLikedRecipes);
     };
 
     const handleUnlike = () => {
       setIsLiked(false);
-      unlikeRecipe(id);
+      const newLikedRecipes = likedRecipes.replace(`${id},`, "");
+      mutate(newLikedRecipes);
     };
 
     return (
-      <View>
+      <ScrollView>
         <ExpoFastImage
           cacheKey={data.id}
-          className="mx-auto h-[60%] w-[100%]  object-scale-down"
+          className="mx-auto h-[50vh] w-[100%]  object-scale-down"
           source={{
             uri: data.imageUrl,
           }}
         />
         <View className="flex flex-row">
-          <Text className="ml-5 font-bold text-3xl mt-5">{data.title}</Text>
+          <Text className="ml-5 font-bold text-3xl mt-5 w-[70%]">
+            {data.title}
+          </Text>
           {isLiked ? (
             <Button
               onPress={() => handleUnlike()}
@@ -107,17 +121,19 @@ export const SingleRecipeScreen = ({ route }: any) => {
             </Text>
           </Text>
           <View>
-            <Text>Ingredients: </Text>
+            <Text className="font-bold">Ingredients: </Text>
             {ingredients}
           </View>
 
           <View>
-            <Text>Steps: </Text>
+            <Text className="font-bold">Steps: </Text>
             {steps}
           </View>
-          <Text>Calories {data.calories} kcals</Text>
+          <Text className="font-bold mt-5">
+            Calories {data.calories} kcals per serving
+          </Text>
         </View>
-      </View>
+      </ScrollView>
     );
   } else {
     return (

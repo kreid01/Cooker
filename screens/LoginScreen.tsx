@@ -1,28 +1,27 @@
-import * as React from "react";
-import {
-  Box,
-  Text,
-  Heading,
-  VStack,
-  FormControl,
-  Input,
-  Link,
-  Button,
-  HStack,
-  View,
-  Center,
-  Pressable,
-  Icon,
-} from "native-base";
+import { MaterialIcons } from "@expo/vector-icons";
 import axios from "axios";
 import { Formik } from "formik";
+import {
+  Box,
+  Button,
+  Center,
+  FormControl,
+  Heading,
+  HStack,
+  Icon,
+  Input,
+  Link,
+  Pressable,
+  Text,
+  VStack,
+} from "native-base";
+import * as React from "react";
 import { useMutation, useQueryClient } from "react-query";
-import { MaterialIcons } from "@expo/vector-icons";
-import { setAccessToken } from "../utills/accessToken";
 import { useDispatch, useSelector } from "react-redux";
 import { setUser } from "../slices/userSlice";
 import { RootState } from "../store/store";
-import { LikedRecipesScreen } from "./LikedRecipesScreen";
+import { setAccessToken } from "../utills/accessToken";
+import { CalendarScreen } from "./CalendarScreen";
 
 export type Login = {
   email: string;
@@ -173,6 +172,6 @@ export const LoginScreen = ({ navigation }: any) => {
       )}
     </Formik>
   ) : (
-    <LikedRecipesScreen />
+    <CalendarScreen navigation={navigation} />
   );
 };
