@@ -1,9 +1,10 @@
 import React from "react";
 import { useQuery } from "react-query";
 import { getLikedRecipes } from "../utills/likedRecipes";
-import { RecipeComponent } from "./RecipeComponent";
-import { FlatList, View, Text } from "native-base";
+import { RecipeComponent } from "../components/RecipeComponent";
+import { FlatList, View, Text, Spinner, Image } from "native-base";
 import { useRefreshOnFocus } from "../hooks/useRefreshonFocus";
+import { StyleSheet } from "react-native";
 
 const getRecipes = async () => {
   const recipes = await getLikedRecipes();
@@ -19,7 +20,15 @@ export const LikedRecipesScreen = ({ navigation }: any) => {
   useRefreshOnFocus(refetch);
 
   return isSuccess && typeof data === "object" ? (
-    <View className="relative z-10 mt-5">
+    <View className="relative z-10">
+      <Image
+        source={{
+          uri: "https://t4.ftcdn.net/jpg/01/06/84/75/360_F_106847582_7JcRyHVy0xsp9qIDvuccmdl5oz3jorbm.jpg",
+        }}
+        style={StyleSheet.absoluteFillObject}
+        blurRadius={80}
+        alt=""
+      />
       <FlatList
         numColumns={2}
         renderItem={({ item, index }: { item: string; index: number }) => {
@@ -35,6 +44,6 @@ export const LikedRecipesScreen = ({ navigation }: any) => {
       ></FlatList>
     </View>
   ) : (
-    <Text>Loading...</Text>
+    <Spinner color="indigo.500" size="lg" className="mx-auto mt-10" />
   );
 };

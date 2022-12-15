@@ -48,7 +48,6 @@ const loginUser = async (user: Login) => {
 export const LoginScreen = ({ navigation }: any) => {
   const [show, setShow] = React.useState<Boolean>(false);
   const currentUser = useSelector((state: RootState) => state.user.value);
-  alert(currentUser?.firstName);
   const queryClient = useQueryClient();
   const dispatch = useDispatch();
   const { mutate, isLoading } = useMutation(loginUser, {
@@ -64,7 +63,7 @@ export const LoginScreen = ({ navigation }: any) => {
       queryClient.invalidateQueries("create");
     },
   });
-  return currentUser === null ? (
+  return currentUser === undefined || currentUser === null ? (
     <Formik
       initialValues={{
         email: "",

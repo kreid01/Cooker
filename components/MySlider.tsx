@@ -23,7 +23,7 @@ export const MySlider: React.FC<Props> = ({
       maxValue={maxValue}
       size="lg"
       my={2}
-      onChange={(e: any) => handleChange(e, type)}
+      onChange={(e: any) => setTimeout(() => handleChange(e, type), 5000)}
     >
       <Slider.Track>
         <Slider.FilledTrack bg="#9D14FF" />

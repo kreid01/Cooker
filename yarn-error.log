@@ -1,8 +1,8 @@
 Arguments: 
-  C:\Program Files\nodejs\node.exe C:\Users\kiera\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js add -D @types/expo-fast-image
+  C:\Program Files\nodejs\node.exe C:\Users\kiera\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js add -D @types/collect-js
 
 PATH: 
-  C:\windows\system32;C:\windows;C:\windows\System32\Wbem;C:\windows\System32\WindowsPowerShell\v1.0\;C:\windows\System32\OpenSSH\;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files\NVIDIA Corporation\NVIDIA NvDLISR;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\dotnet\;C:\Users\kiera\AppData\Roaming\nvm;C:\Program Files\nodejs;C:\Program Files\nodejs\;C:\Program Files\Microsoft SQL Server\150\Tools\Binn\;C:\Program Files\Microsoft SQL Server\Client SDK\ODBC\170\Tools\Binn\;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\Git\cmd;C:\Program Files\Docker\Docker\resources\bin;C:\Program Files (x86)\Microsoft SQL Server\150\Tools\Binn\;C:\Program Files\Microsoft SQL Server\150\DTS\Binn\;C:\Program Files (x86)\Microsoft SQL Server\150\DTS\Binn\;C:\Program Files\Azure Data Studio\bin;C:\Program Files\Amazon\AWSCLIV2\;C:\Program Files\MySQL\MySQL Shell 8.0\bin\;C:\Users\kiera\AppData\Local\Microsoft\WindowsApps;C:\Users\kiera\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\kiera\AppData\Local\GitHubDesktop\bin;C:\Users\kiera\AppData\Roaming\nvm;C:\Program Files\nodejs;C:\Users\kiera\AppData\Roaming\npm;C:\Users\kiera\.dotnet\tools;C:\Users\kiera\AppData\Local\Programs\Python\Python310;c:\users\kiera\appdata\local\programs\python\python310\lib\site-packages;;C:\Program Files\Azure Data Studio\bin;C:\Program Files\heroku\bin
+  C:\windows\system32;C:\windows;C:\windows\System32\Wbem;C:\windows\System32\WindowsPowerShell\v1.0\;C:\windows\System32\OpenSSH\;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files\NVIDIA Corporation\NVIDIA NvDLISR;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\dotnet\;C:\Users\kiera\AppData\Roaming\nvm;C:\Program Files\nodejs;C:\Program Files\nodejs\;C:\Program Files\Microsoft SQL Server\150\Tools\Binn\;C:\Program Files\Microsoft SQL Server\Client SDK\ODBC\170\Tools\Binn\;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\Git\cmd;C:\Program Files\Docker\Docker\resources\bin;C:\Program Files (x86)\Microsoft SQL Server\150\Tools\Binn\;C:\Program Files\Microsoft SQL Server\150\DTS\Binn\;C:\Program Files (x86)\Microsoft SQL Server\150\DTS\Binn\;C:\Program Files\Azure Data Studio\bin;C:\Program Files\Amazon\AWSCLIV2\;C:\Program Files\MySQL\MySQL Shell 8.0\bin\;C:\Users\kiera\AppData\Local\Microsoft\WindowsApps;C:\Users\kiera\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\kiera\AppData\Local\GitHubDesktop\bin;C:\Users\kiera\AppData\Roaming\nvm;C:\Program Files\nodejs;C:\Users\kiera\AppData\Roaming\npm;C:\Users\kiera\.dotnet\tools;C:\Users\kiera\AppData\Local\Programs\Python\Python310;c:\users\kiera\appdata\local\programs\python\python310\lib\site-packages;C:\Program Files\Azure Data Studio\bin;C:\Program Files\heroku\bin;C:\Program Files\OpenSSL-Win64\bin;
 
 Yarn version: 
   1.22.19
@@ -14,7 +14,7 @@ Platform:
   win32 x64
 
 Trace: 
-  Error: https://registry.yarnpkg.com/@types%2fexpo-fast-image: Not found
+  Error: https://registry.yarnpkg.com/@types%2fcollect-js: Not found
       at Request.params.callback [as _callback] (C:\Users\kiera\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:66145:18)
       at Request.self.callback (C:\Users\kiera\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:140890:22)
       at Request.emit (node:events:513:28)
@@ -50,6 +50,7 @@ npm manifest:
       "@reduxjs/toolkit": "^1.9.1",
       "AsyncStorage": "^0.1.5",
       "axios": "^1.2.0",
+      "collect-js": "^0.0.4",
       "expo": "~47.0.8",
       "expo-dev-client": "~2.0.1",
       "expo-fast-image": "^1.1.3",
@@ -4409,6 +4410,11 @@ Lockfile:
       "@types/q" "^1.5.1"
       chalk "^2.4.1"
       q "^1.1.2"
+  
+  collect-js@^0.0.4:
+    version "0.0.4"
+    resolved "https://registry.yarnpkg.com/collect-js/-/collect-js-0.0.4.tgz#42e6a7b687cd2a1f0e5a3632206aba4d5f3e2864"
+    integrity sha512-uJJorudbfRFFscg5Se/mwDsxNqeXDlcYd0Tt8bq9BztBfynxzevBTINtvHSbixBBI9zfTkt3j1Y+FJHfW8vzhw==
   
   collection-visit@^1.0.0:
     version "1.0.0"

@@ -1,69 +1,31 @@
-import axios from "axios";
 import { Image, Spinner, Text, View } from "native-base";
-import { useEffect } from "react";
-import { RefreshControl, StyleSheet, TouchableOpacity } from "react-native";
-import { useInfiniteQuery, useQuery } from "react-query";
-import { useDispatch } from "react-redux";
-import { Recipe } from "../consts/interfaces";
-import { setUser } from "../slices/userSlice";
-import { getAccessToken } from "../utills/accessToken";
 import React, { useRef } from "react";
-import { useRefreshOnFocus } from "../hooks/useRefreshonFocus";
+import { Recipe } from "../consts/interfaces";
+import { RefreshControl, StyleSheet, TouchableOpacity } from "react-native";
 import Animated from "react-native-reanimated";
 
-const getRecipe = async (pageParam: number) => {
-  const { data } = await axios.get(
-    `http://ec2-44-203-24-124.compute-1.amazonaws.com/recipes?search=&pageNumber=${pageParam}&limit=10`
-  );
-  return data;
-};
+interface Props {
+  data: any;
+  loadNext: any;
+  isFetching: any;
+  refetch: any;
+  navigation: any;
+}
 
-const getUser = async () => {
-  const token = await getAccessToken();
-  const { data } = await axios.get(
-    "http://ec2-44-203-24-124.compute-1.amazonaws.com/users/auth",
-    {
-      headers: {
-        authorization: "Bearer " + token,
-      },
-    }
-  );
-  console.debug(data);
-  return await data;
-};
-
-export const HomeScreen = ({ navigation }: any) => {
-  const dispatch = useDispatch();
-  const { data: user } = useQuery(["user"], getUser);
+export const RecipeView: React.FC<Props> = ({
+  data,
+  loadNext,
+  isFetching,
+  refetch,
+  navigation,
+}) => {
   const AnimatedTouchable = Animated.createAnimatedComponent(TouchableOpacity);
-
-  const { data, fetchNextPage, hasNextPage, isFetching, refetch, isSuccess } =
-    useInfiniteQuery({
-      queryKey: ["recipes"],
-      queryFn: ({ pageParam = 1 }) => getRecipe(pageParam),
-      getNextPageParam: (lastPage) => {
-        if (lastPage.length < 10) return undefined;
-        return lastPage.nextPage;
-      },
-    });
-
-  useRefreshOnFocus(refetch);
-
-  const loadNext = () => {
-    if (hasNextPage) {
-      fetchNextPage();
-    }
-  };
-
-  useEffect(() => {
-    dispatch(setUser(user));
-  }, [user]);
 
   const scrollY = useRef(new Animated.Value(0)).current;
   const itemSize = 176;
 
   return (
-    <View className="relative z-10 pt-5">
+    <View className="relative z-10 pt-2">
       <Image
         source={{
           uri: "https://t4.ftcdn.net/jpg/01/06/84/75/360_F_106847582_7JcRyHVy0xsp9qIDvuccmdl5oz3jorbm.jpg",

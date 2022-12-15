@@ -27,7 +27,7 @@ export const SearchScreen = ({ navigation }: any) => {
 
   return (
     <View>
-      <View bgColor="#D6C9FF" h="12" marginTop={4}>
+      <View bgColor="#D6C9FF" h="12">
         <Input
           my="auto"
           mx={3}
@@ -43,7 +43,7 @@ export const SearchScreen = ({ navigation }: any) => {
           <TouchableOpacity
             onPress={() => navigation.navigate("Recipe", { id: item.id })}
             key={item.id}
-            className="w-[95vw] flex flex-row rounded-md bg-gray-200 h-[10vh]  m-2"
+            className="w-[95vw] flex flex-row rounded-md bg-gray-200 h-[12vh]  m-2"
           >
             <ExpoFastImage
               cacheKey={item.id}
@@ -53,7 +53,7 @@ export const SearchScreen = ({ navigation }: any) => {
               }}
             />
             <View>
-              <Text className="text-lg font-bold ml-1 text-slate-800">
+              <Text className="text-lg font-bold ml-1 w-[70%] text-slate-800">
                 {item.title}
               </Text>
 

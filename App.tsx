@@ -211,8 +211,7 @@ export default function App() {
         <Provider store={store}>
           <NativeBaseProvider>
             <NavigationContainer>
-              <SafeAreaView style={{ flex: 0, backgroundColor: "#D6C9FF" }} />
-              <Stack.Navigator>
+              <Stack.Navigator screenOptions={{ headerShown: false }}>
                 <Stack.Screen
                   options={{
                     headerTitle: (props) => <LogoTitle />,
@@ -221,15 +220,6 @@ export default function App() {
                   component={Root}
                 />
                 <Stack.Screen
-                  options={{
-                    headerStyle: {
-                      backgroundColor: "#D6C9FF",
-                    },
-                    headerTintColor: "#fff",
-                    headerTitleStyle: {
-                      fontWeight: "bold",
-                    },
-                  }}
                   name="Recipe"
                   component={SingleRecipeScreen}
                 ></Stack.Screen>

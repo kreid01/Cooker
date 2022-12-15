@@ -1,4 +1,5 @@
 import {
+  faArrowLeft,
   faCutlery,
   faHeart,
   faKitchenSet,
@@ -6,17 +7,26 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import axios from "axios";
-import { Button, ScrollView, Text, View } from "native-base";
+import {
+  Button,
+  ScrollView,
+  Spinner,
+  StatusBar,
+  Text,
+  View,
+} from "native-base";
 import { useEffect, useState } from "react";
 import { useMutation, useQuery } from "react-query";
 //@ts-ignore
 import ExpoFastImage from "expo-fast-image";
 import { getLikedRecipes, setLikedRecipe } from "../utills/likedRecipes";
 import React from "react";
+import { useSelector } from "react-redux";
+import { RootState } from "../store/store";
 
 const getLikes = async () => {
   const recipes = await getLikedRecipes();
-  return recipes.toString();
+  return recipes;
 };
 const getRecipe = async ({ queryKey }: any) => {
   const { data } = await axios.get(
@@ -27,19 +37,36 @@ const getRecipe = async ({ queryKey }: any) => {
   return data;
 };
 
+const deleteRecipe = async (id: number) => {
+  const { data: response } = await axios.delete(
+    `http://ec2-44-203-24-124.compute-1.amazonaws.com/recipes/${id}`
+  );
+  return response.data;
+};
+
 const setRecipes = async (values: string) => {
   await setLikedRecipe(values);
 };
 
-export const SingleRecipeScreen = ({ route }: any) => {
+export const SingleRecipeScreen = ({ route, navigation }: any) => {
   const { id } = route.params;
   const { data, status } = useQuery(["recipes", id], getRecipe);
   const { data: likedRecipes, isSuccess } = useQuery(["recipes"], getLikes);
+  const currentUser = useSelector((state: RootState) => state.user.value);
   const [isLiked, setIsLiked] = useState(false);
   const { mutate } = useMutation(setRecipes);
 
+  const { mutateAsync } = useMutation(deleteRecipe, {
+    onSuccess: (data) => {
+      alert("Yea");
+      navigation.navigate("Home");
+    },
+    onError: () => {
+      alert("there was an error");
+    },
+  });
   useEffect(() => {
-    setIsLiked(likedRecipes.includes(id));
+    if (isLiked) setIsLiked(likedRecipes.includes(id));
   }, [likedRecipes]);
 
   if (status === "success" && isSuccess) {
@@ -81,6 +108,14 @@ export const SingleRecipeScreen = ({ route }: any) => {
             uri: data.imageUrl,
           }}
         />
+        <Button
+          className="absolute mt-10 ml-7 text-white"
+          color="white"
+          variant="ghost"
+          onPress={() => navigation.navigate("Home")}
+        >
+          <FontAwesomeIcon size={30} icon={faArrowLeft} />
+        </Button>
         <View className="flex flex-row">
           <Text className="ml-5 font-bold text-3xl mt-5 w-[70%]">
             {data.title}
@@ -132,14 +167,15 @@ export const SingleRecipeScreen = ({ route }: any) => {
           <Text className="font-bold mt-5">
             Calories {data.calories} kcals per serving
           </Text>
+          {currentUser?.id === data.creatorId ? (
+            <Button onPress={() => mutateAsync(id)} className="my-2 bg-red-500">
+              Delete
+            </Button>
+          ) : null}
         </View>
       </ScrollView>
     );
   } else {
-    return (
-      <View>
-        <Text>Loading...</Text>
-      </View>
-    );
+    return <Spinner color="indigo.500" size="lg" className="mx-auto mt-10" />;
   }
 };

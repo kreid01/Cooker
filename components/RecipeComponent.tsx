@@ -1,6 +1,6 @@
 import React from "react";
 import axios from "axios";
-import { Image, Text } from "native-base";
+import { Image, Text, Spinner } from "native-base";
 import { useQuery } from "react-query";
 import { TouchableOpacity } from "react-native";
 //@ts-ignore
@@ -40,6 +40,6 @@ export const RecipeComponent: React.FC<Props> = ({ navigation, id }: any) => {
       </Text>
     </TouchableOpacity>
   ) : (
-    <Text>Loading...</Text>
+    <Spinner color="indigo.500" size="lg" className="mx-auto mt-10" />
   );
 };

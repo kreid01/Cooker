@@ -1,6 +1,6 @@
 import React from "react";
 import axios from "axios";
-import { Image, Text } from "native-base";
+import { Spinner, Text } from "native-base";
 import { useQuery } from "react-query";
 import { TouchableOpacity } from "react-native";
 //@ts-ignore
@@ -46,7 +46,7 @@ export const CalendarRecipe: React.FC<Props> = ({
     <TouchableOpacity
       onPress={() => navigation.navigate("Recipe", { id: item.id })}
       key={item.id}
-      className="w-[29vw] rounded-sm bg-gray-200 h-[20vh] m-2"
+      className="w-[29vw] rounded-sm bg-gray-200 h-[22vh] m-2"
     >
       <ExpoFastImage
         source={{
@@ -55,11 +55,11 @@ export const CalendarRecipe: React.FC<Props> = ({
         className="w-fit rounded-t-md h-24"
       />
       <Text className="font-bold ml-1  text-slate-700">{item.title}</Text>
-      <Text className="text-slate-700 my-auto mx-auto font-bold text-lg">
+      <Text className="text-slate-700 mt-auto mx-auto font-bold text-lg">
         {dayOfWeek}
       </Text>
     </TouchableOpacity>
   ) : (
-    <Text>Loading...</Text>
+    <Spinner color="indigo.500" size="lg" className="mx-auto mt-10" />
   );
 };
