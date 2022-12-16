@@ -1,5 +1,5 @@
 import axios from "axios";
-import { Image, Spinner, Text, View } from "native-base";
+import { Image, Spinner, StatusBar, Text, View } from "native-base";
 import { useEffect } from "react";
 import { RefreshControl, StyleSheet, TouchableOpacity } from "react-native";
 import { useInfiniteQuery, useQuery } from "react-query";
@@ -10,6 +10,7 @@ import { getAccessToken } from "../utills/accessToken";
 import React, { useRef } from "react";
 import { useRefreshOnFocus } from "../hooks/useRefreshonFocus";
 import Animated from "react-native-reanimated";
+import { Header } from "../components/Header";
 
 const getRecipe = async (pageParam: number) => {
   const { data } = await axios.get(
@@ -28,7 +29,6 @@ const getUser = async () => {
       },
     }
   );
-  console.debug(data);
   return await data;
 };
 
@@ -63,12 +63,12 @@ export const HomeScreen = ({ navigation }: any) => {
   const itemSize = 176;
 
   return (
-    <View className="relative z-10 pt-5">
+    <View className="relative min-h-100vh">
+      <Header />
       <Image
         source={{
           uri: "https://t4.ftcdn.net/jpg/01/06/84/75/360_F_106847582_7JcRyHVy0xsp9qIDvuccmdl5oz3jorbm.jpg",
         }}
-        style={StyleSheet.absoluteFillObject}
         blurRadius={80}
         alt=""
       />
@@ -115,7 +115,7 @@ export const HomeScreen = ({ navigation }: any) => {
                   className="h-44 rounded-t-md"
                   alt=""
                 />
-                <Text className="text-lg font-bold ml-1  text-slate-700">
+                <Text className="text-lg font-bold ml-1  text-black">
                   {item.title}
                 </Text>
               </AnimatedTouchable>

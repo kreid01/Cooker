@@ -5,6 +5,7 @@ import { RecipeComponent } from "../components/RecipeComponent";
 import { FlatList, View, Text, Spinner, Image } from "native-base";
 import { useRefreshOnFocus } from "../hooks/useRefreshonFocus";
 import { StyleSheet } from "react-native";
+import { Header } from "../components/Header";
 
 const getRecipes = async () => {
   const recipes = await getLikedRecipes();
@@ -21,11 +22,11 @@ export const LikedRecipesScreen = ({ navigation }: any) => {
 
   return isSuccess && typeof data === "object" ? (
     <View className="relative z-10">
+      <Header />
       <Image
         source={{
           uri: "https://t4.ftcdn.net/jpg/01/06/84/75/360_F_106847582_7JcRyHVy0xsp9qIDvuccmdl5oz3jorbm.jpg",
         }}
-        style={StyleSheet.absoluteFillObject}
         blurRadius={80}
         alt=""
       />

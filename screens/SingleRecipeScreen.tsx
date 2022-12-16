@@ -7,14 +7,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import axios from "axios";
-import {
-  Button,
-  ScrollView,
-  Spinner,
-  StatusBar,
-  Text,
-  View,
-} from "native-base";
+import { Button, ScrollView, Spinner, Text, View } from "native-base";
 import { useEffect, useState } from "react";
 import { useMutation, useQuery } from "react-query";
 //@ts-ignore
@@ -23,6 +16,7 @@ import { getLikedRecipes, setLikedRecipe } from "../utills/likedRecipes";
 import React from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../store/store";
+import * as Animatable from "react-native-animatable";
 
 const getLikes = async () => {
   const recipes = await getLikedRecipes();
@@ -109,8 +103,8 @@ export const SingleRecipeScreen = ({ route, navigation }: any) => {
           }}
         />
         <Button
+          _hover={{ bg: "amber.400", borderRadius: "100px" }}
           className="absolute mt-10 ml-7 text-white"
-          color="white"
           variant="ghost"
           onPress={() => navigation.navigate("Home")}
         >
@@ -137,33 +131,41 @@ export const SingleRecipeScreen = ({ route, navigation }: any) => {
           )}
         </View>
 
-        <View className="mx-5 mt-5 p-5 bg-gray-200 ">
-          <View className="flex flex-row justify-between">
+        <Animatable.View className="mx-5 mt-5 p-5 bg-gray-200 ">
+          <Animatable.View
+            animation="bounceIn"
+            delay={250}
+            className="flex flex-row justify-between"
+          >
             <Text fontSize="lg">
               <FontAwesomeIcon size={20} icon={faPlateWheat} /> Prep:{" "}
               {data.prepTime} minutes
             </Text>
+
             <Text fontSize="lg">
               <FontAwesomeIcon size={20} icon={faKitchenSet} />
               Cook: {data.cookingTime} minutes
             </Text>
-          </View>
-          <Text fontSize="lg" className="mx-auto mt-2">
-            <FontAwesomeIcon size={20} icon={faCutlery} />
-            <Text>
-              {" "}
-              {data.servings} {data.servings === 1 ? "serving" : "servings"}
+          </Animatable.View>
+
+          <Animatable.View animation="bounceIn" delay={250}>
+            <Text fontSize="lg" className="mx-auto mt-2">
+              <FontAwesomeIcon size={20} icon={faCutlery} />
+              <Text>
+                {" "}
+                {data.servings} {data.servings === 1 ? "serving" : "servings"}
+              </Text>
             </Text>
-          </Text>
-          <View>
+          </Animatable.View>
+          <Animatable.View animation="fadeInUp" delay={400}>
             <Text className="font-bold">Ingredients: </Text>
             {ingredients}
-          </View>
+          </Animatable.View>
 
-          <View>
+          <Animatable.View animation="fadeInUp" delay={500}>
             <Text className="font-bold">Steps: </Text>
             {steps}
-          </View>
+          </Animatable.View>
           <Text className="font-bold mt-5">
             Calories {data.calories} kcals per serving
           </Text>
@@ -172,7 +174,7 @@ export const SingleRecipeScreen = ({ route, navigation }: any) => {
               Delete
             </Button>
           ) : null}
-        </View>
+        </Animatable.View>
       </ScrollView>
     );
   } else {

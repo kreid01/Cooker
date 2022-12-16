@@ -10,11 +10,12 @@ import { useDebounce } from "../hooks/useDebounce";
 import React from "react";
 // @ts-ignore
 import ExpoFastImage from "expo-fast-image";
+import { Header } from "../components/Header";
 
 const searchRecipes = async ({ queryKey }: any) => {
   if (queryKey[1] && queryKey[1].length > 0) {
     const { data } = await axios.get(
-      `http://ec2-44-203-24-124.compute-1.amazonaws.com/recipes?search=${queryKey[1]}`
+      `http://ec2-44-203-24-124.compute-1.amazonaws.com/recipes?search=${queryKey[1]}&pageNumber=1&limit=20`
     );
     return data;
   }
@@ -27,6 +28,7 @@ export const SearchScreen = ({ navigation }: any) => {
 
   return (
     <View>
+      <Header />
       <View bgColor="#D6C9FF" h="12">
         <Input
           my="auto"

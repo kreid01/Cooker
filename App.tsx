@@ -3,35 +3,21 @@ import { QueryClient, QueryClientProvider } from "react-query";
 import { NavigationContainer } from "@react-navigation/native";
 import { HomeScreen } from "./screens/HomeScreen";
 import { AddRecipeScreen } from "./screens/AddRecipeScreen";
-import { Image, NativeBaseProvider, View, Text } from "native-base";
+import { NativeBaseProvider, View, Text } from "native-base";
 import { RegisterScreen } from "./screens/RegisterScreen";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { LoginScreen } from "./screens/LoginScreen";
 import { setAccessToken } from "./utills/accessToken";
-import { Provider, useSelector } from "react-redux";
-import store, { RootState } from "./store/store";
+import { Provider } from "react-redux";
+import store from "./store/store";
 import { SingleRecipeScreen } from "./screens/SingleRecipeScreen";
-import { SafeAreaView, TouchableOpacity } from "react-native";
+import { TouchableOpacity } from "react-native";
 import * as Animatable from "react-native-animatable";
 import { Icons } from "./components/Icons";
 import { navStyles } from "./styles/BottomNavStyles";
 import { SearchScreen } from "./screens/SearchScreen";
 import { LikedRecipesScreen } from "./screens/LikedRecipesScreen";
-
-export const LogoTitle = () => {
-  return (
-    <View className="bg-[#D6C9FF] min-h-[7vh] z-2 -ml-5 relative">
-      <Image
-        source={{
-          uri: "https://elephant.art/wp-content/uploads/2020/02/wp4154552.png",
-        }}
-        alt=""
-        className="w-[200vw]  h-[6vh]"
-      />
-    </View>
-  );
-};
 
 export default function App() {
   const client = new QueryClient();
@@ -212,13 +198,7 @@ export default function App() {
           <NativeBaseProvider>
             <NavigationContainer>
               <Stack.Navigator screenOptions={{ headerShown: false }}>
-                <Stack.Screen
-                  options={{
-                    headerTitle: (props) => <LogoTitle />,
-                  }}
-                  name="Back"
-                  component={Root}
-                />
+                <Stack.Screen name="Back" component={Root} />
                 <Stack.Screen
                   name="Recipe"
                   component={SingleRecipeScreen}

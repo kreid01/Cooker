@@ -3,10 +3,10 @@ import React from "react";
 import { useQuery } from "react-query";
 import { getLikedRecipes } from "../utills/likedRecipes";
 import { CalendarRecipe } from "../components/CalendarRecipe";
-import { StyleSheet } from "react-native";
 import { useRefreshOnFocus } from "../hooks/useRefreshonFocus";
 import { useDispatch } from "react-redux";
 import { setUser } from "../slices/userSlice";
+import { Header } from "../components/Header";
 
 const getRecipes = async () => {
   const recipes = await getLikedRecipes();
@@ -26,12 +26,12 @@ export const CalendarScreen = ({ navigation }: any) => {
   useRefreshOnFocus(refetch);
 
   return isSuccess && typeof data === "object" ? (
-    <View className="relative z-10">
+    <View className="relative">
+      <Header />
       <Image
         source={{
           uri: "https://t4.ftcdn.net/jpg/01/06/84/75/360_F_106847582_7JcRyHVy0xsp9qIDvuccmdl5oz3jorbm.jpg",
         }}
-        style={StyleSheet.absoluteFillObject}
         blurRadius={80}
         alt=""
       />
@@ -43,6 +43,7 @@ export const CalendarScreen = ({ navigation }: any) => {
         Randomize
       </Button>
       <Button
+        colorScheme="indigo"
         onPress={() => dispatch(setUser(null))}
         className="ml-auto w-[20vw] h-10"
         variant="ghost"
