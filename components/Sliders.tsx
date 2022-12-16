@@ -1,5 +1,6 @@
 import { Slider, View, Text } from "native-base";
 import React from "react";
+import { MySlider } from "./MySlider";
 
 interface Props {
   sliderValues: {
@@ -19,76 +20,50 @@ interface Props {
 }
 
 export const Sliders: React.FC<Props> = ({ sliderValues, setSliderValues }) => {
+  const handleChange = (e: any, type: string) => {
+    setSliderValues((prevState) => ({
+      ...prevState,
+      [type]: Math.floor(e),
+    }));
+  };
+
   return (
     <View>
       <Text>Calories: {sliderValues.calories} per serving</Text>
-      <Slider
-        defaultValue={40}
-        size="sm"
-        my={2}
-        onChange={(e: any) =>
-          setSliderValues((prevState) => ({
-            ...prevState,
-            calories: Math.floor(e),
-          }))
-        }
-      >
-        <Slider.Track>
-          <Slider.FilledTrack />
-        </Slider.Track>
-        <Slider.Thumb />
-      </Slider>
+      <MySlider
+        handleChange={handleChange}
+        maxValue={600}
+        minValue={50}
+        defaultValue={300}
+        type="calories"
+      />
       <Text> {sliderValues.servings} servings</Text>
-      <Slider
-        defaultValue={40}
-        size="sm"
-        my={2}
-        onChange={(e: any) =>
-          setSliderValues((prevState) => ({
-            ...prevState,
-            servings: Math.floor(e),
-          }))
-        }
-      >
-        <Slider.Track>
-          <Slider.FilledTrack />
-        </Slider.Track>
-        <Slider.Thumb />
-      </Slider>
+      <MySlider
+        handleChange={handleChange}
+        maxValue={20}
+        minValue={1}
+        defaultValue={4}
+        type="servings"
+      />
+
       <Text>Preparation Time: {sliderValues.prepTime} mins</Text>
-      <Slider
-        defaultValue={40}
-        size="sm"
-        my={2}
-        onChange={(e: any) =>
-          setSliderValues((prevState) => ({
-            ...prevState,
-            prepTime: Math.floor(e),
-          }))
-        }
-      >
-        <Slider.Track>
-          <Slider.FilledTrack />
-        </Slider.Track>
-        <Slider.Thumb />
-      </Slider>
+      <MySlider
+        handleChange={handleChange}
+        maxValue={90}
+        minValue={5}
+        defaultValue={10}
+        type="prepTime"
+      />
+
       <Text>Cooking Time: {sliderValues.cookingTime} mins</Text>
-      <Slider
-        defaultValue={40}
-        size="sm"
-        my={2}
-        onChange={(e: any) =>
-          setSliderValues((prevState) => ({
-            ...prevState,
-            cookingTime: Math.floor(e),
-          }))
-        }
-      >
-        <Slider.Track>
-          <Slider.FilledTrack />
-        </Slider.Track>
-        <Slider.Thumb />
-      </Slider>
+
+      <MySlider
+        handleChange={handleChange}
+        maxValue={90}
+        minValue={5}
+        defaultValue={10}
+        type="cookingTime"
+      />
     </View>
   );
 };

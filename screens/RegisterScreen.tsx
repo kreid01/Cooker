@@ -1,36 +1,32 @@
-import { useState } from "react";
-import React from "react";
-import { useQueryClient } from "react-query";
-import { object, string } from "zod";
-import { useMutation } from "react-query";
+import { MaterialIcons } from "@expo/vector-icons";
 import axios from "axios";
 import { Formik } from "formik";
 import {
-  Input,
-  View,
   Button,
   FormControl,
-  Icon,
-  Pressable,
-  Text,
-  WarningOutlineIcon,
   Heading,
   HStack,
-  Link,
+  Icon,
+  Input,
+  Pressable,
+  Text,
+  View,
+  WarningOutlineIcon,
 } from "native-base";
-import { MaterialIcons } from "@expo/vector-icons";
+import { useState } from "react";
+import { useMutation, useQueryClient } from "react-query";
+import { object, string } from "zod";
 import { toFormikValidationSchema } from "zod-formik-adapter";
 
 const createUser = async (queryKey: User) => {
   const { data: response } = await axios.post(
-    "http://192.168.0.73:4000/users",
+    "http://ec2-44-203-24-124.compute-1.amazonaws.com/users/register",
     queryKey
   );
   return response.data;
 };
 
 export type User = {
-  id?: number;
   firstName: string;
   lastName: string;
   email: string;
@@ -38,7 +34,7 @@ export type User = {
   passwordConfirm: string;
 };
 
-export const RegisterScreen = () => {
+export const RegisterScreen = ({ navigation }: any) => {
   const [show, setShow] = useState<Boolean>(false);
   const queryClient = useQueryClient();
   const registerSchema = object({
@@ -62,6 +58,7 @@ export const RegisterScreen = () => {
     onSuccess: (data) => {
       const message = "success";
       alert(message);
+      navigation.navigate("Login");
     },
     onError: () => {
       alert("there was an error");
@@ -228,8 +225,7 @@ export const RegisterScreen = () => {
             mt={5}
             onPress={() => handleSubmit()}
             isLoadingText="Submitting"
-            colorScheme="indigo"
-            disabled={isLoading}
+            bgColor="#9D14FF"
           >
             Register
           </Button>
@@ -244,16 +240,18 @@ export const RegisterScreen = () => {
             >
               Already have an account?{" "}
             </Text>
-            <Link
+            <Button
+              variant="ghost"
+              mt="-10px"
               _text={{
-                color: "indigo.500",
+                color: "#9D14FF",
                 fontWeight: "medium",
                 fontSize: "sm",
               }}
-              href="#"
+              onPress={() => navigation.navigate("Login")}
             >
               Sign in
-            </Link>
+            </Button>
           </HStack>
         </View>
       )}

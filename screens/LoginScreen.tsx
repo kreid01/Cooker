@@ -1,22 +1,27 @@
-import * as React from "react";
-import {
-  Box,
-  Text,
-  Heading,
-  VStack,
-  FormControl,
-  Input,
-  Link,
-  Button,
-  HStack,
-  Center,
-  Pressable,
-  Icon,
-} from "native-base";
+import { MaterialIcons } from "@expo/vector-icons";
 import axios from "axios";
 import { Formik } from "formik";
+import {
+  Box,
+  Button,
+  Center,
+  FormControl,
+  Heading,
+  HStack,
+  Icon,
+  Input,
+  Link,
+  Pressable,
+  Text,
+  VStack,
+} from "native-base";
+import * as React from "react";
 import { useMutation, useQueryClient } from "react-query";
-import { MaterialIcons } from "@expo/vector-icons";
+import { useDispatch, useSelector } from "react-redux";
+import { setUser } from "../slices/userSlice";
+import { RootState } from "../store/store";
+import { setAccessToken } from "../utills/accessToken";
+import { CalendarScreen } from "./CalendarScreen";
 
 export type Login = {
   email: string;
@@ -24,21 +29,32 @@ export type Login = {
 };
 
 const loginUser = async (user: Login) => {
-  const { data: response } = await axios.post(
-    "http://192.168.0.73:4000/users/login",
+  const { data } = await axios.post(
+    "http://ec2-44-203-24-124.compute-1.amazonaws.com/users/login",
     user
   );
-  return response;
+  const { data: userInfo } = await axios.get(
+    "http://ec2-44-203-24-124.compute-1.amazonaws.com/users/auth",
+    {
+      headers: {
+        authorization: "Bearer " + data,
+      },
+    }
+  );
+
+  return { token: data, user: userInfo };
 };
 
-export const LoginScreen = ({}) => {
+export const LoginScreen = ({ navigation }: any) => {
   const [show, setShow] = React.useState<Boolean>(false);
+  const currentUser = useSelector((state: RootState) => state.user.value);
   const queryClient = useQueryClient();
-
+  const dispatch = useDispatch();
   const { mutate, isLoading } = useMutation(loginUser, {
     onSuccess: (data) => {
-      const message = "success";
-      alert(message);
+      setAccessToken(data?.token);
+      dispatch(setUser(data.user));
+      navigation.navigate("Home");
     },
     onError: () => {
       alert("Invalid login");
@@ -47,7 +63,7 @@ export const LoginScreen = ({}) => {
       queryClient.invalidateQueries("create");
     },
   });
-  return (
+  return currentUser === undefined || currentUser === null ? (
     <Formik
       initialValues={{
         email: "",
@@ -115,7 +131,7 @@ export const LoginScreen = ({}) => {
                   _text={{
                     fontSize: "xs",
                     fontWeight: "500",
-                    color: "indigo.500",
+                    color: "#9D14FF",
                   }}
                   alignSelf="flex-end"
                   mt="1"
@@ -123,11 +139,7 @@ export const LoginScreen = ({}) => {
                   Forget Password?
                 </Link>
               </FormControl>
-              <Button
-                onPress={() => handleSubmit()}
-                mt="2"
-                colorScheme="indigo"
-              >
+              <Button onPress={() => handleSubmit()} mt="2" bgColor="#9D14FF">
                 Sign in
               </Button>
               <HStack mt="6" justifyContent="center">
@@ -140,21 +152,25 @@ export const LoginScreen = ({}) => {
                 >
                   I'm a new user.{" "}
                 </Text>
-                <Link
+                <Button
+                  variant="ghost"
+                  mt="-10px"
                   _text={{
-                    color: "indigo.500",
+                    color: "#9D14FF",
                     fontWeight: "medium",
                     fontSize: "sm",
                   }}
-                  href="#"
+                  onPress={() => navigation.navigate("Registration")}
                 >
-                  Sign Up
-                </Link>
+                  Sign up
+                </Button>
               </HStack>
             </VStack>
           </Box>
         </Center>
       )}
     </Formik>
+  ) : (
+    <CalendarScreen navigation={navigation} />
   );
 };
