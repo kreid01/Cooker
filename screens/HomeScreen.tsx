@@ -63,15 +63,8 @@ export const HomeScreen = ({ navigation }: any) => {
   const itemSize = 176;
 
   return (
-    <View className="relative min-h-100vh">
+    <View className="relative pb-52">
       <Header />
-      <Image
-        source={{
-          uri: "https://t4.ftcdn.net/jpg/01/06/84/75/360_F_106847582_7JcRyHVy0xsp9qIDvuccmdl5oz3jorbm.jpg",
-        }}
-        blurRadius={80}
-        alt=""
-      />
       {data && data.pages ? (
         <Animated.FlatList
           onScroll={Animated.event(

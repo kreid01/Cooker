@@ -23,13 +23,6 @@ export const LikedRecipesScreen = ({ navigation }: any) => {
   return isSuccess && typeof data === "object" ? (
     <View className="relative z-10">
       <Header />
-      <Image
-        source={{
-          uri: "https://t4.ftcdn.net/jpg/01/06/84/75/360_F_106847582_7JcRyHVy0xsp9qIDvuccmdl5oz3jorbm.jpg",
-        }}
-        blurRadius={80}
-        alt=""
-      />
       <FlatList
         numColumns={2}
         renderItem={({ item, index }: { item: string; index: number }) => {
